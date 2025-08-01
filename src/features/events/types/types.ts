@@ -1,0 +1,90 @@
+// src/types/event.types.ts
+
+export interface EventFormData {
+  title: string;
+  description: string;
+  location: string;
+  eventDate: Date;
+  eventTime: string;
+  cutoffDate: Date;
+  type: number;
+  organization: string;
+  capacity: number;
+  eventImageUrl?: string;
+}
+
+export interface EventCardProps {
+  id: string;
+  title: string;
+  eventDate: Date;
+  eventTime: string;
+  cutoffDate: Date;
+  location: string;
+  eventImageUrl?: string;
+  onAction: (id: string) => void;
+  onViewDetails: (id: string) => void;
+}
+
+export interface EventTypeOption {
+  value: number;
+  label: string;
+}
+
+export interface EventDetails {
+  id: string
+  title: string
+  description: string
+  location: string
+  eventDate: Date
+  cutoffDate: Date;
+  eventTime: string
+  eventImageUrl?: string;
+  organization: string
+  capacity: number
+  type: string
+}
+
+export interface Event {
+  id: string;
+  title: string;
+  eventDate: Date;
+  eventTime: string;
+  location: string;
+  eventImageUrl?: string;
+}
+
+export interface Props {
+  onSubmit: (data: EventFormData) => void;
+  onFileChange?: (file: File | null) => void;
+}
+
+export interface DateAndTimePickerProps {
+  onDateChange?: (date: Date) => void;
+  onTimeChange?: (time: string) => void;
+}
+
+export interface DateOnlyPickerProps {
+  onDateChange?: (date: Date) => void;
+  initialDate?: Date;
+} 
+
+export interface UpdateFormProps {
+  event: EventFormData;
+  onSubmit: (event: EventFormData) => void;
+  onFileChange?: (file: File | null) => void;
+}
+
+export interface EventRegistrationCardProps {
+  eventImageUrl?: string;
+  userName?: string;
+  email?: string;
+  eventName?: string;
+  phoneNumber?: string;
+  eventDate: string;
+  eventTime: string;
+  onCancel: () => void;
+};
+
+
+
+
