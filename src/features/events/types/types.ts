@@ -23,6 +23,7 @@ export interface EventCardProps {
   eventImageUrl?: string;
   onAction: (id: string) => void;
   onViewDetails: (id: string) => void;
+  onViewRegistrations: (id: string) => void;
 }
 
 export interface EventTypeOption {
@@ -31,17 +32,17 @@ export interface EventTypeOption {
 }
 
 export interface EventDetails {
-  id: string
-  title: string
-  description: string
-  location: string
-  eventDate: Date
+  id: string;
+  title: string;
+  description: string;
+  location: string;
+  eventDate: Date;
   cutoffDate: Date;
-  eventTime: string
+  eventTime: string;
   eventImageUrl?: string;
-  organization: string
-  capacity: number
-  type: string
+  organization: string;
+  capacity: number;
+  type: string;
 }
 
 export interface Event {
@@ -66,7 +67,7 @@ export interface DateAndTimePickerProps {
 export interface DateOnlyPickerProps {
   onDateChange?: (date: Date) => void;
   initialDate?: Date;
-} 
+}
 
 export interface UpdateFormProps {
   event: EventFormData;
@@ -83,8 +84,32 @@ export interface EventRegistrationCardProps {
   eventDate: string;
   eventTime: string;
   onCancel: () => void;
-};
+}
 
+export interface PaginatedResult<T> {
+  data: T[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+}
 
+export interface FilterOptions {
+  location: string;
+  type: string;
+  dateFrom: string;
+  dateTo: string;
+  status: string;
+}
 
-
+export interface EventSearchProps {
+  filters: FilterOptions;
+  setFilters: React.Dispatch<React.SetStateAction<FilterOptions>>;
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  onApplyFilters: () => void;
+  onClearFilters: () => void;
+  onRefresh: () => void;
+  loading: boolean;
+  eventTypes: EventTypeOption[];
+  uniqueLocations: string[];
+}

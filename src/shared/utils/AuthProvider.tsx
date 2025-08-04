@@ -46,9 +46,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return (
       <div>
         <p>Authentication Error: {error}</p>
-        <button onClick={() => window.location.reload()}>
-          Retry
-        </button>
+        <button onClick={() => window.location.reload()}>Retry</button>
       </div>
     );
   }
@@ -59,5 +57,3 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return <>{children}</>;
 };
-
-

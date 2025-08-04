@@ -1,6 +1,10 @@
-// src/components/events/EventCard.tsx
-
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon, ClockIcon, MapPinIcon } from "lucide-react";
 import { format } from "date-fns";
@@ -18,66 +22,89 @@ export const EventCard: React.FC<EventCardProps> = ({
   eventImageUrl,
   onAction,
   onViewDetails,
+  onViewRegistrations,
 }) => {
-  const { hasRole } = useRole()
+  const { hasRole } = useRole();
   const { isUpdatePage, isDeletePage, isBrowsePage } = useCurrentEventPage();
+  const today = new Date();
+  const isRegistrationClosed = new Date(cutoffDate) < today;
+
 
   return (
-    <Card className="w-full max-w-sm shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer p-3 rounded-lg backdrop-blur-md bg-white/20">
+    <Card className="w-full pt-0 max-w-sm rounded-xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
       <CardHeader className="p-0">
-        <div className="h-48 w-full bg-gray-200 overflow-hidden">
+        <div className="h-48 w-full overflow-hidden">
           <img
             src={eventImageUrl || "/placeholder.png"}
             alt="Event"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-t-xl"
           />
         </div>
       </CardHeader>
 
-      <CardContent className="pb-1">
-        <CardTitle className="text-lg font-semibold text-white">{title}</CardTitle>
-        <div className="text-sm text-muted-foreground mt-2 flex flex-col gap-1">
-          <span className="flex items-center gap-2 text-white">
+      <CardContent className="px-4 py-3">
+        <CardTitle className="text-lg font-semibold text-white mb-2">
+          {title}
+        </CardTitle>
+        <ul className="text-sm text-white space-y-1">
+          <li className="flex items-center gap-2">
             <CalendarIcon size={16} /> {format(new Date(eventDate), "PPP")}
-          </span>
-          <span className="flex items-center gap-2 text-white">
+          </li>
+          <li className="flex items-center gap-2">
             <ClockIcon size={16} /> {eventTime}
-          </span>
-          <span className="flex items-center gap-2 text-white">
+          </li>
+          <li className="flex items-center gap-2">
             <MapPinIcon size={16} /> {location}
-          </span>
-            <span className="flex items-center gap-2 text-white">
-              <CalendarIcon size={16} /> Registration ends: {format(new Date(cutoffDate), "PPP")}
-            </span>
+          </li>
+          <li className="flex items-center gap-2">
+            <CalendarIcon size={16} /> Registration ends:{" "}
+            {format(new Date(cutoffDate), "PPP")}
+          </li>
+        </ul>
 
-        </div>
+        {isRegistrationClosed && (
+          <div className="text-sm text-red-400 font-medium text-center">
+            Registration Closed
+          </div>
+        )}
+
       </CardContent>
-      <CardFooter className="flex flex-col p-4 pt-2">
-        <Button className="w-full" onClick={() => onViewDetails(id)}>
+
+      <CardFooter className="flex flex-col gap-3 px-4 pb-4">
+        <Button
+          className="w-full bg-white text-black hover:bg-gray-100 transition font-medium"
+          onClick={() => onViewDetails(id)}
+        >
           View Details
         </Button>
 
-          {hasRole("public_user") && isBrowsePage && (
-          <div className="pt-6">
-              <Button className="text-white bg-primary hover:bg-primary/90 px-6 py-2">
-              Register Now
-              </Button>
-          </div>
-          )}
-          {isUpdatePage && (
-          <div className="pt-6">
-              <Button className="text-white bg-primary hover:bg-primary/90 px-6 py-2" onClick={() => onAction(id)}>
-              Update the Event
-              </Button>
-          </div>
-          )}
-          {isDeletePage && (
-          <div className="pt-6">
-              <Button className="text-white bg-primary hover:bg-primary/90 px-6 py-2" onClick={() => onAction(id)}>
-              Delete the Event
-              </Button>
-          </div>
-          )}
+        {hasRole("Admin") && isBrowsePage && (
+          <Button
+            className="w-full bg-gray-500 hover:bg-gray-800 text-white transition"
+            onClick={() => onViewRegistrations(id)}
+          >
+            View Registrations
+          </Button>
+        )}
+
+        {hasRole("public_user") && isBrowsePage && (
+          <Button className="w-full bg-green-600 hover:bg-green-500 text-white transition">
+            Register Now
+          </Button>
+        )}
+
+        {(isUpdatePage || isDeletePage) && (
+          <Button
+            className={`w-full ${
+              isUpdatePage
+                ? "bg-yellow-600 hover:bg-yellow-500"
+                : "bg-red-600 hover:bg-red-500"
+            } text-white transition`}
+            onClick={() => onAction(id)}
+          >
+            {isUpdatePage ? "Update the Event" : "Delete the Event"}
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

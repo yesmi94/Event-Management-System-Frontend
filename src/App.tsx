@@ -12,33 +12,40 @@ import EventDetailsPage from "./features/events/pages/eventDetailsPage";
 import EventImageUploadPage from "./features/events/pages/eventImageUploadPage";
 import EventDeleteDisplayPage from "./features/events/pages/eventDeleteDisplayPage";
 import EventUpdateDisplayPage from "./features/events/pages/eventUpdateDisplayPage";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import { EventUpdatePage } from "./features/events/pages/eventUpdatePage";
 import MyRegistrationsPage from "./features/users/publicUsers/pages/myRegistrationsPage";
 import Footer from "./features/common/components/footer";
 import ProfilePage from "./features/common/pages/profilePage";
+import RegistrationsForEventDisplayPage from "./features/events/pages/eventRegistrationsListPage";
 
 function App() {
   const { hasRole } = useRole();
 
   return (
     <Router>
-      {/* Conditionally render navbar */}
       {hasRole("Admin") ? <AdminNavbar /> : <UserNavbar />}
       <ToastContainer position="top-right" autoClose={3000} />
 
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/event-actions" element={<EventActionsPage/>}/>
-        <Route path="/event-creation" element={<CreateEventPage/>}/>
-        <Route path="/events" element={<EventsDisplayPage/>}/>
+        <Route path="/event-actions" element={<EventActionsPage />} />
+        <Route path="/event-creation" element={<CreateEventPage />} />
+        <Route path="/events" element={<EventsDisplayPage />} />
         <Route path="/events-delete" element={<EventDeleteDisplayPage />} />
         <Route path="/events-update" element={<EventUpdateDisplayPage />} />
         <Route path="/events/:id" element={<EventDetailsPage />} />
         <Route path="/events-update/:id" element={<EventUpdatePage />} />
-        <Route path="/events/:id/upload-image" element={<EventImageUploadPage />} />
-        <Route path="/registrations" element={<MyRegistrationsPage/>} />
-        <Route path="/profile" element={<ProfilePage/>} />
+        <Route
+          path="/events/:id/upload-image"
+          element={<EventImageUploadPage />}
+        />
+        <Route path="/registrations" element={<MyRegistrationsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/events/:eventId/registrations"
+          element={<RegistrationsForEventDisplayPage />}
+        />
         {/* You can add more routes here */}
       </Routes>
       <Footer></Footer>
@@ -47,5 +54,3 @@ function App() {
 }
 
 export default App;
-
-

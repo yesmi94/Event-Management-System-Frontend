@@ -5,27 +5,41 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { eventSchema } from "../schemas/eventSchema";
-import type { EventFormData, EventTypeOption, UpdateFormProps } from "../types/types";
+import type {
+  EventFormData,
+  EventTypeOption,
+  UpdateFormProps,
+} from "../types/types";
 import React, { useEffect, useState } from "react";
 import { DateOnlyPicker } from "./dateOnlyPicker";
 import { getEventTypes } from "../services/eventService";
-import { 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  Users, 
-  Building2, 
-  FileText, 
-  Image, 
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Users,
+  Building2,
+  FileText,
+  Image,
   AlertCircle,
   CheckCircle,
   Upload,
-  Edit3
+  Edit3,
 } from "lucide-react";
 
-export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, onFileChange }) => {
+export const UpdateEventForm: React.FC<UpdateFormProps> = ({
+  event,
+  onSubmit,
+  onFileChange,
+}) => {
   const [eventTypes, setEventTypes] = useState<EventTypeOption[]>([]);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -84,21 +98,21 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFileChange(e.dataTransfer.files[0]);
     }
   };
 
-  const FormSection: React.FC<{ 
-    title: string; 
-    icon: React.ReactNode; 
+  const FormSection: React.FC<{
+    title: string;
+    icon: React.ReactNode;
     children: React.ReactNode;
     delay: number;
   }> = ({ title, icon, children, delay }) => (
-    <div 
+    <div
       className={`bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
       style={{ transitionDelay: `${delay}ms` }}
     >
@@ -106,9 +120,7 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
         {icon}
         <h3 className="text-xl font-semibold text-white">{title}</h3>
       </div>
-      <div className="space-y-4">
-        {children}
-      </div>
+      <div className="space-y-4">{children}</div>
     </div>
   );
 
@@ -146,9 +158,11 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
 
       <div className="relative z-10 py-12 px-6">
         <div className="max-w-4xl mx-auto">
-          <div 
+          <div
             className={`text-center mb-12 transition-all duration-1000 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 -translate-y-8"
             }`}
           >
             <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
@@ -161,28 +175,36 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-            <FormSection 
-              title="Basic Information" 
+            <FormSection
+              title="Basic Information"
               icon={<FileText className="w-6 h-6 text-purple-400" />}
               delay={200}
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField label="Event Title" error={errors.title?.message}>
-                  <Input 
-                    {...register("title")} 
+                  <Input
+                    {...register("title")}
                     className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400/50"
                     placeholder="Enter event title"
                   />
                 </FormField>
 
                 <FormField label="Event Type" error={errors.type?.message}>
-                  <Select onValueChange={(value) => setValue("type", Number(value), { shouldValidate: true })}>
+                  <Select
+                    onValueChange={(value) =>
+                      setValue("type", Number(value), { shouldValidate: true })
+                    }
+                  >
                     <SelectTrigger className="bg-white/10 border-white/20 text-white focus:border-blue-400 focus:ring-blue-400/50">
                       <SelectValue placeholder="Select event type" />
                     </SelectTrigger>
                     <SelectContent className="bg-gray-800 border-gray-700">
                       {eventTypes.map((type) => (
-                        <SelectItem key={type.value} value={type.value.toString()} className="text-white hover:bg-gray-700">
+                        <SelectItem
+                          key={type.value}
+                          value={type.value.toString()}
+                          className="text-white hover:bg-gray-700"
+                        >
                           {type.label}
                         </SelectItem>
                       ))}
@@ -191,17 +213,20 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
                 </FormField>
               </div>
 
-              <FormField label="Description" error={errors.description?.message}>
-                <Textarea 
-                  {...register("description")} 
+              <FormField
+                label="Description"
+                error={errors.description?.message}
+              >
+                <Textarea
+                  {...register("description")}
                   className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400/50 min-h-[120px]"
                   placeholder="Describe your event in detail"
                 />
               </FormField>
             </FormSection>
 
-            <FormSection 
-              title="Location & Organization" 
+            <FormSection
+              title="Location & Organization"
               icon={<MapPin className="w-6 h-6 text-purple-400" />}
               delay={400}
             >
@@ -209,19 +234,22 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
                 <FormField label="Location" error={errors.location?.message}>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input 
-                      {...register("location")} 
+                    <Input
+                      {...register("location")}
                       className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400/50"
                       placeholder="Event venue or address"
                     />
                   </div>
                 </FormField>
 
-                <FormField label="Organization" error={errors.organization?.message}>
+                <FormField
+                  label="Organization"
+                  error={errors.organization?.message}
+                >
                   <div className="relative">
                     <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input 
-                      {...register("organization")} 
+                    <Input
+                      {...register("organization")}
                       className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400/50"
                       placeholder="Organizing company or group"
                     />
@@ -230,35 +258,41 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
               </div>
             </FormSection>
 
-            <FormSection 
-              title="Event Details" 
+            <FormSection
+              title="Event Details"
               icon={<Calendar className="w-6 h-6 text-purple-400" />}
               delay={600}
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <FormField 
-                  label="Event Date" 
+                <FormField
+                  label="Event Date"
                   error={errors.eventDate?.message}
-                  info={eventDate instanceof Date && !isNaN(eventDate.getTime()) ? `Selected: ${format(eventDate, "PPP")}` : undefined}
+                  info={
+                    eventDate instanceof Date && !isNaN(eventDate.getTime())
+                      ? `Selected: ${format(eventDate, "PPP")}`
+                      : undefined
+                  }
                 >
                   <div className="bg-white/10 border border-white/20 rounded-lg p-4">
                     <DateOnlyPicker
-                      onDateChange={(date) => date && setValue("eventDate", date)}
+                      onDateChange={(date) =>
+                        date && setValue("eventDate", date)
+                      }
                       initialDate={event?.eventDate}
                     />
                   </div>
                 </FormField>
 
-                <FormField 
-                  label="Event Time" 
+                <FormField
+                  label="Event Time"
                   error={errors.eventTime?.message}
                   info={eventTime ? `Selected: ${eventTime}` : undefined}
                 >
                   <div className="relative">
                     <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input 
+                    <Input
                       type="time"
-                      {...register("eventTime")} 
+                      {...register("eventTime")}
                       className="pl-10 bg-white/10 border-white/20 text-white focus:border-purple-400 focus:ring-purple-400/50"
                     />
                   </div>
@@ -267,12 +301,13 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
                 <FormField label="Capacity" error={errors.capacity?.message}>
                   <div className="relative">
                     <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input 
+                    <Input
                       type="number"
                       min="1"
-                      {...register("capacity", { 
-                        setValueAs: (value) => value === "" ? undefined : Number(value)
-                      })} 
+                      {...register("capacity", {
+                        setValueAs: (value) =>
+                          value === "" ? undefined : Number(value),
+                      })}
                       className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400/50"
                       placeholder="Max attendees"
                     />
@@ -280,10 +315,14 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
                 </FormField>
               </div>
 
-              <FormField 
-                label="Registration Cutoff Date" 
+              <FormField
+                label="Registration Cutoff Date"
                 error={errors.cutoffDate?.message}
-                info={cutoffDate instanceof Date && !isNaN(cutoffDate.getTime()) ? `Selected: ${format(cutoffDate, "PPP")}` : undefined}
+                info={
+                  cutoffDate instanceof Date && !isNaN(cutoffDate.getTime())
+                    ? `Selected: ${format(cutoffDate, "PPP")}`
+                    : undefined
+                }
               >
                 <div className="bg-white/10 border border-white/20 rounded-lg p-4 max-w-md">
                   <DateOnlyPicker
@@ -294,17 +333,17 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
               </FormField>
             </FormSection>
 
-            <FormSection 
-              title="Event Image" 
+            <FormSection
+              title="Event Image"
               icon={<Image className="w-6 h-6 text-purple-400" />}
               delay={800}
             >
               <FormField label="Upload Event Image">
                 <div
                   className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
-                    dragActive 
-                      ? 'border-pink-400 bg-purple-400/10' 
-                      : 'border-white/20 bg-white/5 hover:border-purple-400/50 hover:bg-white/10'
+                    dragActive
+                      ? "border-pink-400 bg-purple-400/10"
+                      : "border-white/20 bg-white/5 hover:border-purple-400/50 hover:bg-white/10"
                   }`}
                   onDragEnter={handleDrag}
                   onDragLeave={handleDrag}
@@ -314,24 +353,34 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+                    onChange={(e) =>
+                      handleFileChange(e.target.files?.[0] || null)
+                    }
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  
+
                   <div className="flex flex-col items-center gap-4">
                     <div className="w-16 h-16 bg-purple-400/20 rounded-full flex items-center justify-center">
                       <Upload className="w-8 h-8 text-purple-400" />
                     </div>
-                    
+
                     {selectedFile ? (
                       <div>
-                        <p className="text-green-400 font-medium">{selectedFile.name}</p>
-                        <p className="text-gray-400 text-sm">Click or drag to replace</p>
+                        <p className="text-green-400 font-medium">
+                          {selectedFile.name}
+                        </p>
+                        <p className="text-gray-400 text-sm">
+                          Click or drag to replace
+                        </p>
                       </div>
                     ) : (
                       <div>
-                        <p className="text-white font-medium mb-2">Drop your image here or click to browse</p>
-                        <p className="text-gray-400 text-sm">Supports JPG, PNG • Replace current image</p>
+                        <p className="text-white font-medium mb-2">
+                          Drop your image here or click to browse
+                        </p>
+                        <p className="text-gray-400 text-sm">
+                          Supports JPG, PNG • Replace current image
+                        </p>
                       </div>
                     )}
                   </div>
@@ -339,13 +388,15 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
               </FormField>
             </FormSection>
 
-            <div 
+            <div
               className={`text-center pt-8 transition-all duration-1000 delay-1000 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
               }`}
             >
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-12 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
@@ -368,5 +419,3 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({ event, onSubmit, on
     </div>
   );
 };
-
-

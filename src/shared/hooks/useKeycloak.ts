@@ -15,8 +15,8 @@ export const useKeycloak = () => {
       name?: string;
       phone_number?: string;
       realm_access?: {
-    roles: string[];
-  };
+        roles: string[];
+      };
     },
     login: () => keycloak.login(),
     logout: () => keycloak.logout(),

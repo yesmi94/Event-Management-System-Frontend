@@ -14,18 +14,16 @@ export default function CreateEventPage() {
 
   const handleAddEvent = async (data: EventFormData) => {
     try {
-      // Step 1: Create the event
       const response = await createEvent(data);
       console.log(response);
       const eventId = response.data?.id;
       console.log(eventId);
 
-      if (!eventId){
+      if (!eventId) {
         toast.error("Failed to create the event");
         throw new Error("No event ID returned from event creation");
-      } 
+      }
 
-      // Step 2: Upload the image *after* event is created
       if (imageFile) {
         const formData = new FormData();
         formData.append("file", imageFile);
@@ -37,22 +35,22 @@ export default function CreateEventPage() {
 
       navigate(`/events/${eventId}`);
     } catch (error: unknown) {
-    let errorMessage = 'An unexpected error occurred.';
+      let errorMessage = "An unexpected error occurred.";
 
-    if (axios.isAxiosError(error)) {
-      const axiosError = error as AxiosError<{
-        message: string;
-        errors: string[];
-      }>;
+      if (axios.isAxiosError(error)) {
+        const axiosError = error as AxiosError<{
+          message: string;
+          errors: string[];
+        }>;
 
-      const backendMessage = axiosError.response?.data?.errors?.[0];
-      const fallbackMessage = axiosError.response?.data?.message;
+        const backendMessage = axiosError.response?.data?.errors?.[0];
+        const fallbackMessage = axiosError.response?.data?.message;
 
-      errorMessage = backendMessage || fallbackMessage || axiosError.message;
+        errorMessage = backendMessage || fallbackMessage || axiosError.message;
+      }
+
+      toast.error(errorMessage.replace(/^Failed:\s*/i, ""));
     }
-
-    toast.error(errorMessage.replace(/^Failed:\s*/i, ''));
-  }
   };
 
   return (
@@ -74,5 +72,3 @@ export default function CreateEventPage() {
     </div>
   );
 }
-
-

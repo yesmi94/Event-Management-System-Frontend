@@ -16,7 +16,6 @@ const EventRegistrationCard: React.FC<EventRegistrationCardProps> = ({
       className="relative w-full max-w-sm h-72 rounded-2xl shadow-lg overflow-hidden bg-cover bg-center"
       style={{ backgroundImage: `url(${eventImageUrl})` }}
     >
-
       <div className="absolute inset-0 bg-black/60 flex flex-col justify-between p-4 text-white">
         <div>
           <h2 className="text-xl font-semibold">{eventName}</h2>
@@ -26,8 +25,8 @@ const EventRegistrationCard: React.FC<EventRegistrationCardProps> = ({
         </div>
 
         <div>
-            <p className="text-sm">{eventDate}</p>
-            <p className="text-sm">{eventTime}</p>
+          <p className="text-sm">{eventDate}</p>
+          <p className="text-sm">{eventTime}</p>
         </div>
 
         <div className="text-right">

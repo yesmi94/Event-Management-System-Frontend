@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -7,24 +7,28 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useKeycloak } from "@/shared/hooks/useKeycloak"
-import { userRegistrationSchema } from "@/features/users/publicUsers/schemas/userEventRegistrationSchema"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import type { UserEventRegistrationData } from "@/features/users/types/types"
-import { useParams } from "react-router-dom"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useKeycloak } from "@/shared/hooks/useKeycloak";
+import { userRegistrationSchema } from "@/features/users/publicUsers/schemas/userEventRegistrationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import type { UserEventRegistrationData } from "@/features/users/types/types";
+import { useParams } from "react-router-dom";
 
-export function RegisterForEventDialog({open, onOpenChange, onSubmit}: {
-    open: boolean,
-    onSubmit: (data: UserEventRegistrationData) => void;
-    onOpenChange: (value: boolean) => void
+export function RegisterForEventDialog({
+  open,
+  onOpenChange,
+  onSubmit,
+}: {
+  open: boolean;
+  onSubmit: (data: UserEventRegistrationData) => void;
+  onOpenChange: (value: boolean) => void;
 }) {
-    const {eventId} = useParams();
-    const { user } = useKeycloak();
-    const {
+  const { eventId } = useParams();
+  const { user } = useKeycloak();
+  const {
     register,
     handleSubmit,
     formState: { errors },
@@ -36,12 +40,12 @@ export function RegisterForEventDialog({open, onOpenChange, onSubmit}: {
       eventId: eventId ?? "",
       publicUserId: user?.sub ?? "",
       email: user?.email ?? "",
+      registeredAt: new Date(),
       phoneNumber: user?.phone_number ?? "",
     },
-    
   });
 
-  console.log("Public user Id"+user?.sub);
+  console.log("Public user Id" + user?.sub);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -58,21 +62,27 @@ export function RegisterForEventDialog({open, onOpenChange, onSubmit}: {
               <Label htmlFor="registeredUserName">Name</Label>
               <Input {...register("registeredUserName")} />
               {errors.registeredUserName && (
-                <span className="text-red-500 text-sm">{errors.registeredUserName.message}</span>
+                <span className="text-red-500 text-sm">
+                  {errors.registeredUserName.message}
+                </span>
               )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input type="email" {...register("email")} />
               {errors.email && (
-                <span className="text-red-500 text-sm">{errors.email.message}</span>
+                <span className="text-red-500 text-sm">
+                  {errors.email.message}
+                </span>
               )}
             </div>
             <div className="grid gap-2">
               <Label htmlFor="phone_number">Phone Number</Label>
               <Input {...register("phoneNumber")} />
               {errors.phoneNumber && (
-                <span className="text-red-500 text-sm">{errors.phoneNumber.message}</span>
+                <span className="text-red-500 text-sm">
+                  {errors.phoneNumber.message}
+                </span>
               )}
             </div>
           </div>
@@ -80,11 +90,12 @@ export function RegisterForEventDialog({open, onOpenChange, onSubmit}: {
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit" onClick={handleSubmit(onSubmit)}>Register</Button>
+            <Button type="submit" onClick={handleSubmit(onSubmit)}>
+              Register
+            </Button>
           </DialogFooter>
         </DialogContent>
       </form>
     </Dialog>
-  )
+  );
 }
-
