@@ -65,13 +65,12 @@ export default function EventDetailsPage() {
 
   if (!event) return <div className="text-center p-10">Event not found.</div>;
 
-  const eventDateFormatted = format((event.eventDate), "PPP");
+  const eventDateFormatted = format(event.eventDate, "PPP");
   const eventTimeFormatted = event.eventTime;
   const today = new Date();
   const isRegistrationClosed = new Date(event.cutoffDate) < today;
 
-  const attendeesLabel =
-    event.capacity === 1 ? "Attendee" : "Attendees";
+  const attendeesLabel = event.capacity === 1 ? "Attendee" : "Attendees";
 
   const handleRegistration = async (data: UserEventRegistrationData) => {
     try {
@@ -130,7 +129,7 @@ export default function EventDetailsPage() {
           </div>
           <div className="flex items-center gap-2 text-red-400">
             <CalendarIcon size={18} />
-            {format((event.cutoffDate), "PPP")}
+            {format(event.cutoffDate, "PPP")}
           </div>
           <div className="flex items-center gap-2 text-white">
             <ClockIcon size={18} />
@@ -167,7 +166,7 @@ export default function EventDetailsPage() {
           <p className="text-white font-semibold">{event.organization}</p>
         </div>
 
-        {hasRole("Public User") && !isRegistrationClosed &&(
+        {hasRole("Public User") && !isRegistrationClosed && (
           <div className="pt-6">
             <Button
               className="text-black bg-white hover:bg-primary/90 hover:text-white px-6 py-2"
@@ -177,7 +176,7 @@ export default function EventDetailsPage() {
             </Button>
           </div>
         )}
-        {hasRole("Public User") && isRegistrationClosed &&(
+        {hasRole("Public User") && isRegistrationClosed && (
           <div className="pt-6">
             <Button
               className="text-black bg-white hover:bg-primary/90 hover:text-white px-6 py-2"
@@ -199,4 +198,3 @@ export default function EventDetailsPage() {
     </div>
   );
 }
-

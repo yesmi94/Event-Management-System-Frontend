@@ -34,31 +34,41 @@ export function DashboardSection() {
     );
   }
 
-  if (!stats) return <p className="text-center py-10 text-muted">No stats found.</p>;
+  if (!stats)
+    return <p className="text-center py-10 text-muted">No stats found.</p>;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 pb-20 px-20">
       <Card className="bg-gray-300">
         <CardContent className="flex flex-col p-6">
-            <p className="text-3xl font-semibold text-primary text-center">{stats.totalEvents}</p>
-          <h3 className="text-lg text-muted-foreground mb-1 text-center">Total Events</h3>
-          
+          <p className="text-3xl font-semibold text-primary text-center">
+            {stats.totalEvents}
+          </p>
+          <h3 className="text-lg text-muted-foreground mb-1 text-center">
+            Total Events
+          </h3>
         </CardContent>
       </Card>
 
       <Card className="bg-gray-300">
         <CardContent className="flex flex-col p-6">
-            <p className="text-3xl font-semibold text-primary text-center">{stats.totalRegistrations}</p>
-          <h3 className="text-lg text-muted-foreground mb-1 text-center">Total Registrations</h3>
-          
+          <p className="text-3xl font-semibold text-primary text-center">
+            {stats.totalRegistrations}
+          </p>
+          <h3 className="text-lg text-muted-foreground mb-1 text-center">
+            Total Registrations
+          </h3>
         </CardContent>
       </Card>
 
       <Card className="bg-gray-300">
         <CardContent className="flex flex-col p-6">
-            <p className="text-3xl font-semibold text-primary text-center">{stats.upcomingEvents}</p>
-          <h3 className="text-lg text-muted-foreground mb-1 text-center">Upcoming Events</h3>
-          
+          <p className="text-3xl font-semibold text-primary text-center">
+            {stats.upcomingEvents}
+          </p>
+          <h3 className="text-lg text-muted-foreground mb-1 text-center">
+            Upcoming Events
+          </h3>
         </CardContent>
       </Card>
     </div>

@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { useState } from "react";
 
-export function EventFilters({ onFilter }: { onFilter: (filters: any) => void }) {
+export function EventFilters({
+  onFilter,
+}: {
+  onFilter: (filters: any) => void;
+}) {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [dateFrom, setDateFrom] = useState<Date>();

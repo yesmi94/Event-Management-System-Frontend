@@ -29,16 +29,20 @@ export const EventCard: React.FC<EventCardProps> = ({
   const today = new Date();
   const isRegistrationClosed = new Date(cutoffDate) < today;
 
-
   return (
     <Card className="w-full pt-0 max-w-sm rounded-xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
       <CardHeader className="p-0">
-        <div className="h-48 w-full overflow-hidden">
+        <div className="h-48 w-full overflow-hidden text-center">
           <img
             src={eventImageUrl || "/placeholder.png"}
             alt="Event"
             className="w-full h-full object-cover rounded-t-xl"
           />
+          {isRegistrationClosed && (
+            <div className="absolute w-full flex text-lg text-red-400 font-medium justify-center mt-3">
+              Registration Closed!
+            </div>
+          )}
         </div>
       </CardHeader>
 
@@ -61,13 +65,6 @@ export const EventCard: React.FC<EventCardProps> = ({
             {format(new Date(cutoffDate), "PPP")}
           </li>
         </ul>
-
-        {isRegistrationClosed && (
-          <div className="text-sm text-red-400 font-medium text-center">
-            Registration Closed
-          </div>
-        )}
-
       </CardContent>
 
       <CardFooter className="flex flex-col gap-3 px-4 pb-4">

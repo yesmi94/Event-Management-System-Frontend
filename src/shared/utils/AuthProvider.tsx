@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import keycloak from "@/lib/keycloak";
+import Spinner from "../components/spinner";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -39,7 +40,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading authentication...</div>;
+    return <Spinner></Spinner>
   }
 
   if (error) {
@@ -52,7 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   if (!isAuthenticated) {
-    return <div>Not authenticated</div>;
+    return <Spinner></Spinner>
   }
 
   return <>{children}</>;

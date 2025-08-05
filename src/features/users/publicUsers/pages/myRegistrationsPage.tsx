@@ -57,7 +57,8 @@ const MyRegistrationsPage = () => {
             My Registrations
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-6">
-            Manage your event registrations and keep track of your upcoming adventures
+            Manage your event registrations and keep track of your upcoming
+            adventures
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
         </div>
@@ -78,7 +79,8 @@ const MyRegistrationsPage = () => {
                 No registrations yet
               </h3>
               <p className="text-gray-400 mb-6">
-                You haven't registered for any events yet. Explore our events and find your next adventure!
+                You haven't registered for any events yet. Explore our events
+                and find your next adventure!
               </p>
             </div>
           ) : (
@@ -98,7 +100,10 @@ const MyRegistrationsPage = () => {
                     email={registration.email}
                     phoneNumber={registration.phoneNumber}
                     eventName={registration.event.title}
-                    eventDate={format(new Date(registration.event.eventDate), "PPP")}
+                    eventDate={format(
+                      new Date(registration.event.eventDate),
+                      "PPP",
+                    )}
                     eventTime={registration.event.eventTime}
                     onCancel={() => handleCancel(registration.id)}
                   />

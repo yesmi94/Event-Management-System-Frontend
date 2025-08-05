@@ -3,7 +3,7 @@ import keycloak from "@/lib/keycloak";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5243/api",
+  baseURL: "https://localhost:7002/api",
 });
 
 api.interceptors.request.use((config) => {

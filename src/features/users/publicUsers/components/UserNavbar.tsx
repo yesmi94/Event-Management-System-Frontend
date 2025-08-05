@@ -4,7 +4,7 @@ import { User } from "lucide-react";
 
 export default function UserNavbar() {
   const { user } = useKeycloak();
-  
+
   return (
     <nav className="w-full backdrop-blur-md bg-white/30 shadow px-6 py-3 flex justify-between items-center fixed top-0 z-50">
       <div className="text-2xl font-bold text-purple-300">Gatherly</div>

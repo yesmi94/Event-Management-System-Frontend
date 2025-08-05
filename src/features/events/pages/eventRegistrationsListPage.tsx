@@ -7,12 +7,16 @@ import type { UserEventRegistrationData } from "@/features/users/types/types";
 import { useParams } from "react-router-dom";
 
 const EventRegistrationsListPage = () => {
-  const [filteredRegistrations, setFilteredRegistrations] = useState<UserEventRegistrationData[]>([]);
+  const [filteredRegistrations, setFilteredRegistrations] = useState<
+    UserEventRegistrationData[]
+  >([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [registrations, setRegistrations] = useState<UserEventRegistrationData[]>([]);
+  const [registrations, setRegistrations] = useState<
+    UserEventRegistrationData[]
+  >([]);
   const { eventId } = useParams();
 
   useEffect(() => {
@@ -29,9 +33,12 @@ const EventRegistrationsListPage = () => {
 
   useEffect(() => {
     if (Array.isArray(registrations)) {
-      const filtered = registrations.filter((registration) =>
-        registration.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        registration.registeredUserName.toLowerCase().includes(searchTerm.toLowerCase())
+      const filtered = registrations.filter(
+        (registration) =>
+          registration.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          registration.registeredUserName
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()),
       );
       setFilteredRegistrations(filtered);
     }
@@ -81,7 +88,9 @@ const EventRegistrationsListPage = () => {
       </div>
 
       <div className="relative z-10 pt-8 px-6 pb-12">
-        <div className={`text-center mb-12 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"}`}>
+        <div
+          className={`text-center mb-12 transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"}`}
+        >
           <h1 className="text-5xl md:text-6xl font-bold mb-3 bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent">
             Event Registrations
           </h1>
@@ -91,7 +100,9 @@ const EventRegistrationsListPage = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
         </div>
 
-        <div className={`max-w-4xl mx-auto mb-12 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div
+          className={`max-w-4xl mx-auto mb-12 transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/40">
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <div className="relative flex-1">
@@ -112,7 +123,9 @@ const EventRegistrationsListPage = () => {
                   disabled={loading}
                   className="bg-white/10 border-white/20 text-white hover:bg-white/20"
                 >
-                  <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+                  <RefreshCw
+                    className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`}
+                  />
                   Refresh
                 </Button>
               </div>
@@ -155,18 +168,29 @@ const EventRegistrationsListPage = () => {
               ))}
             </div>
           ) : (
-            <div className={`transition-all duration-1000 delay-500 ${isVisible ? "opacity-100" : "opacity-0"}`}>
+            <div
+              className={`transition-all duration-1000 delay-500 ${isVisible ? "opacity-100" : "opacity-0"}`}
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredRegistrations.map((registration, index) => (
                   <div
                     key={registration.id}
                     className="bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow hover:shadow-lg transition-all animate-fadeInUp"
-                    style={{ animationDelay: `${index * 100}ms`, animationFillMode: "forwards" }}
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      animationFillMode: "forwards",
+                    }}
                   >
                     <div className="mb-2">
-                      <h2 className="text-xl font-semibold text-white">{registration.registeredUserName}</h2>
-                      <p className="text-sm text-gray-400">{registration.email}</p>
-                      <p className="text-sm text-gray-400">{registration.phoneNumber}</p>
+                      <h2 className="text-xl font-semibold text-white">
+                        {registration.registeredUserName}
+                      </h2>
+                      <p className="text-sm text-gray-400">
+                        {registration.email}
+                      </p>
+                      <p className="text-sm text-gray-400">
+                        {registration.phoneNumber}
+                      </p>
                     </div>
                     <div className="text-sm text-gray-300 space-y-1">
                       <p>
@@ -174,7 +198,8 @@ const EventRegistrationsListPage = () => {
                       </p>
                       {registration.registeredAt && (
                         <p>
-                          <strong>Registered At:</strong> {new Date(registration.registeredAt).toLocaleString()}
+                          <strong>Registered At:</strong>{" "}
+                          {new Date(registration.registeredAt).toLocaleString()}
                         </p>
                       )}
                     </div>
@@ -186,11 +211,15 @@ const EventRegistrationsListPage = () => {
         </div>
 
         {!loading && filteredRegistrations.length > 0 && (
-          <div className={`mt-16 text-center transition-all duration-1000 delay-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div
+            className={`mt-16 text-center transition-all duration-1000 delay-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          >
             <div className="max-w-4xl mx-auto bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                 <div>
-                  <div className="text-3xl font-bold text-blue-400 mb-2">{filteredRegistrations.length}</div>
+                  <div className="text-3xl font-bold text-blue-400 mb-2">
+                    {filteredRegistrations.length}
+                  </div>
                   <div className="text-gray-400">Registrations Available</div>
                 </div>
               </div>

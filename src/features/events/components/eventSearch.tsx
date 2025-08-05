@@ -1,9 +1,15 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Filter, RefreshCw, X, Calendar, MapPin, Tag } from "lucide-react";
-import { Select, SelectContent, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { SelectItem } from "@radix-ui/react-select";
+import {
+  Search,
+  Filter,
+  RefreshCw,
+  X,
+  Calendar,
+  MapPin,
+  Tag,
+} from "lucide-react";
 import type { FilterOptions, EventSearchProps } from "../types/types";
 
 export default function EventSearch({
@@ -21,7 +27,8 @@ export default function EventSearch({
   const [showFilters, setShowFilters] = useState(false);
 
   const hasActiveFilters =
-    Object.values(filters).some((v) => v !== "" && v !== "All") || searchTerm !== "";
+    Object.values(filters).some((v) => v !== "" && v !== "All") ||
+    searchTerm !== "";
 
   const handleFilterChange = (field: keyof FilterOptions, value: string) => {
     setFilters((prev) => ({ ...prev, [field]: value }));
@@ -59,8 +66,8 @@ export default function EventSearch({
             Filters
             {hasActiveFilters && (
               <span className="ml-2 bg-blue-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
-                {Object.values(filters).filter((v) => v !== "" && v !== "All").length +
-                  (searchTerm !== "" ? 1 : 0)}
+                {Object.values(filters).filter((v) => v !== "" && v !== "All")
+                  .length + (searchTerm !== "" ? 1 : 0)}
               </span>
             )}
           </Button>
@@ -72,7 +79,9 @@ export default function EventSearch({
             disabled={loading}
             className="bg-white/10 border-white/20 text-white hover:bg-white/20"
           >
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+            <RefreshCw
+              className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`}
+            />
             Refresh
           </Button>
         </div>
@@ -81,7 +90,9 @@ export default function EventSearch({
       {showFilters && (
         <div className="mt-4 p-4 bg-white/5 rounded-xl border border-white/10">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white">Advanced Filters</h3>
+            <h3 className="text-lg font-semibold text-white">
+              Advanced Filters
+            </h3>
             {hasActiveFilters && (
               <Button
                 variant="ghost"
@@ -105,13 +116,17 @@ export default function EventSearch({
               <select
                 value={filters.location}
                 onChange={(e) => handleFilterChange("location", e.target.value)}
-                className="w-full bg-white/10 border border-white/20 text-white rounded-md px-3 py-2 text-sm focus:border-blue-400 focus:ring-blue-400/50"
+                className="w-full bg-white/10 border border-white/20 text-white rounded-md px-3 py-2 text-sm focus:border-blue-400 focus:ring-blue-400/50 cursor-pointer"
               >
                 <option value="" className="bg-gray-800">
                   All Locations
                 </option>
                 {uniqueLocations.map((location) => (
-                  <option key={location} value={location} className="bg-gray-800">
+                  <option
+                    key={location}
+                    value={location}
+                    className="bg-gray-800"
+                  >
                     {location}
                   </option>
                 ))}
@@ -124,24 +139,24 @@ export default function EventSearch({
                 <Tag className="w-4 h-4 mr-2" />
                 Event Type
               </label>
-              <Select
-                value={filters.type || "all"}
-                onValueChange={(value) =>
-                  handleFilterChange("type", value === "all" ? "" : value)
-                }
+              <select
+                value={filters.type}
+                onChange={(e) => handleFilterChange("type", e.target.value)}
+                className="w-full bg-white/10 border border-white/20 text-white rounded-md px-3 py-2 text-sm focus:border-blue-400 focus:ring-blue-400/50 cursor-pointer"
               >
-                <SelectTrigger className="w-full bg-white/10 border border-white/20 text-white rounded-md px-3 py-2 text-sm focus:border-blue-400 focus:ring-blue-400/50">
-                  <SelectValue placeholder="Select Type" className="text-black" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                  <SelectItem value="all">All Types</SelectItem>
-                  {eventTypes.map((type) => (
-                    <SelectItem key={type.value} value={type.value.toString()}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                <option value="" className="bg-gray-800">
+                  All Types
+                </option>
+                {eventTypes.map((type) => (
+                  <option
+                    key={type.value}
+                    value={type.value}
+                    className="bg-gray-800 cursor-pointer"
+                  >
+                    {type.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Status Filter */}

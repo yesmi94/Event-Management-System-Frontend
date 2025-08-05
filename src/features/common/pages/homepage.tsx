@@ -47,7 +47,7 @@ export default function Homepage() {
           setIsVisible(true);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     const servicesSection = document.getElementById("services-section");
@@ -84,8 +84,12 @@ export default function Homepage() {
                     : "opacity-0 -translate-y-8 scale-95"
                 }`}
             >
-
-              <span className="text-5xl">Schedule Your Event With, <span className="italic font-serif text-5xl">Gatherly</span> </span>
+              <span className="text-5xl">
+                Schedule Your Event With,{" "}
+                <span className="italic font-serif text-5xl">
+                  Gatherly
+                </span>{" "}
+              </span>
             </span>
             <p
               className={` text-3xl md:text-4xl font-semibold text-white text-center mb-6 transition-opacity transition-transform duration-1000 ease-out
@@ -121,7 +125,9 @@ export default function Homepage() {
           <p
             className={`text-base text-gray-100 leading-relaxed text-center max-w-5xl mx-auto px-4 pt-14 pb-10 transition-opacity transition-transform duration-[1200ms] ease-out
                 ${
-                  heroAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+                  heroAnimated
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-12"
                 }`}
             style={{ transitionDelay: "400ms" }}
           >
@@ -201,5 +207,3 @@ export default function Homepage() {
     </div>
   );
 }
-
-

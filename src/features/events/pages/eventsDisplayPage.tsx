@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { EventCard } from "../components/eventCard";
 import { getEventTypes, getFilteredEvents } from "../services/eventService";
-import type { EventCardProps, EventTypeOption, FilterOptions } from "../types/types";
+import type {
+  EventCardProps,
+  EventTypeOption,
+  FilterOptions,
+} from "../types/types";
 import { ArrowLeft, ArrowRight, Calendar, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EventSearch from "../components/eventSearch";
@@ -24,7 +28,9 @@ export default function EventsDisplayPage() {
     status: "",
   });
 
-  const uniqueLocations = [...new Set(events.map((event) => event.location))].filter(Boolean);
+  const uniqueLocations = [
+    ...new Set(events.map((event) => event.location)),
+  ].filter(Boolean);
   const filteredEvents = events;
 
   useEffect(() => {
@@ -53,6 +59,7 @@ export default function EventsDisplayPage() {
       );
 
       setEvents(response.data.items);
+      console.log(response.data.items);
       setTotalPages(response.data.totalPages);
     } catch (err) {
       setError("Failed to load events");
@@ -97,7 +104,8 @@ export default function EventsDisplayPage() {
   };
 
   const hasActiveFilters =
-    Object.values(filters).some((v) => v !== "" && v !== "All") || searchTerm !== "";
+    Object.values(filters).some((v) => v !== "" && v !== "All") ||
+    searchTerm !== "";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-800 to-black relative overflow-hidden pt-16">
@@ -117,7 +125,8 @@ export default function EventsDisplayPage() {
             Discover Events
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-6">
-            Explore amazing events happening near you and find your next adventure
+            Explore amazing events happening near you and find your next
+            adventure
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
         </div>
@@ -157,7 +166,10 @@ export default function EventsDisplayPage() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
             {[...Array(6)].map((_, index) => (
-              <div key={index} className="animate-pulse bg-gray-700 rounded-lg h-80 mb-4"></div>
+              <div
+                key={index}
+                className="animate-pulse bg-gray-700 rounded-lg h-80 mb-4"
+              ></div>
             ))}
           </div>
         ) : (
@@ -249,7 +261,11 @@ export default function EventsDisplayPage() {
               </div>
               <div>
                 <div className="text-3xl font-bold text-purple-400 mb-2">
-                  {filteredEvents.filter((e) => new Date(e.eventDate) > new Date()).length}
+                  {
+                    filteredEvents.filter(
+                      (e) => new Date(e.eventDate) > new Date(),
+                    ).length
+                  }
                 </div>
                 <div className="text-gray-400">Upcoming Events</div>
               </div>
@@ -265,28 +281,28 @@ export default function EventsDisplayPage() {
             </div>
           </div>
           <div className="flex justify-center mt-6 gap-4 items-center">
-          <Button
-            className="bg-gray-200 rounded text-black px-3 py-0 hover:bg-gray-300"
-            disabled={page === 1}
-            onClick={() => setPage((prev) => prev - 1)}
-            aria-label="Previous Page"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
+            <Button
+              className="bg-gray-200 rounded text-black px-3 py-0 hover:bg-gray-300"
+              disabled={page === 1}
+              onClick={() => setPage((prev) => prev - 1)}
+              aria-label="Previous Page"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
 
-          <span className="text-white">
-            Page {page} of {totalPages}
-          </span>
+            <span className="text-white">
+              Page {page} of {totalPages}
+            </span>
 
-          <Button
-            className="bg-gray-200 rounded text-black px-3 py-0 hover:bg-gray-300"
-            disabled={page === totalPages}
-            onClick={() => setPage((prev) => prev + 1)}
-            aria-label="Next Page"
-          >
-            <ArrowRight className="w-5 h-5" />
-          </Button>
-        </div>
+            <Button
+              className="bg-gray-200 rounded text-black px-3 py-0 hover:bg-gray-300"
+              disabled={page === totalPages}
+              onClick={() => setPage((prev) => prev + 1)}
+              aria-label="Next Page"
+            >
+              <ArrowRight className="w-5 h-5" />
+            </Button>
+          </div>
         </div>
       )}
 
@@ -309,6 +325,3 @@ export default function EventsDisplayPage() {
     </div>
   );
 }
-
-
-

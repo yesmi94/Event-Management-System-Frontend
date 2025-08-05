@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
 import { EventCard } from "../components/eventCard";
-import { deleteEvent, getEvents } from "../services/eventService";
-import type { EventCardProps } from "../types/types";
+import {
+  deleteEvent,
+  getEventTypes,
+  getFilteredEvents,
+} from "../services/eventService";
+import type {
+  EventCardProps,
+  EventTypeOption,
+  FilterOptions,
+} from "../types/types";
 import { toast } from "react-toastify";
 import {
-  Search,
   Calendar,
-  Filter,
   RefreshCw,
   Trash2,
   AlertTriangle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import EventSearch from "../components/eventSearch";
 
 export default function EventDeleteDisplayPage() {
   const [events, setEvents] = useState<EventCardProps[]>([]);
@@ -23,42 +29,90 @@ export default function EventDeleteDisplayPage() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [eventTypes, setEventTypes] = useState<EventTypeOption[]>([]);
+  const [filters, setFilters] = useState<FilterOptions>({
+    location: "",
+    type: "",
+    dateFrom: "",
+    dateTo: "",
+    status: "",
+  });
 
   useEffect(() => {
     fetchEvents();
     setIsVisible(true);
   }, [page]);
 
+  const uniqueLocations = [
+    ...new Set(events.map((event) => event.location)),
+  ].filter(Boolean);
+
+
+
   useEffect(() => {
-    if (Array.isArray(events)) {
-      const filtered = events.filter(
-        (event) =>
-          event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          event.location.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
-      setFilteredEvents(filtered);
-    }
-  }, [events, searchTerm]);
+    getEventTypes()
+      .then((value) => {
+        setEventTypes(value);
+      })
+      .catch((err: any) => {
+        console.error("Failed to fetch event types", err);
+      });
+  }, []);
 
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      setError(null);
-      const response = await getEvents(page, 6);
-      setEvents(response.data.items);
+      setError("");
+
+      const response = await getFilteredEvents(
+        page,
+        6,
+        searchTerm,
+        filters.type,
+        filters.dateFrom,
+        filters.dateTo,
+        filters.location,
+      );
+
+      setFilteredEvents(response.data.items);
+      console.log(response.data.items);
       setTotalPages(response.data.totalPages);
-      console.log("Raw events data:", response.data.items);
-    } catch (error) {
-      console.error("Error fetching events:", error);
-      setError("Failed to load events. Please try again.");
+    } catch (err) {
+      setError("Failed to load events");
     } finally {
       setLoading(false);
     }
   };
 
+  const handleViewDetails = (id: string) => {
+    window.location.href = `/events/${id}`;
+  };
+
+  const applyFilters = () => {
+    setPage(1);
+    fetchEvents();
+  };
+
+  const clearFilters = () => {
+    setFilters({
+      location: "",
+      type: "",
+      dateFrom: "",
+      dateTo: "",
+      status: "",
+    });
+    setSearchTerm("");
+    setPage(1);
+    fetchEvents();
+  };
+
   const handleRefresh = () => {
     fetchEvents();
   };
+
+  const hasActiveFilters =
+    Object.values(filters).some((v) => v !== "" && v !== "All") ||
+    searchTerm !== "";
 
   const handleDelete = async (id: string) => {
     try {
@@ -71,19 +125,9 @@ export default function EventDeleteDisplayPage() {
     }
   };
 
-  const handleViewDetails = (id: string) => {
-    window.location.href = `/events/${id}`;
+  const handleViewRegistrations = (id: string) => {
+    window.location.href = `/events/${id}/registrations`;
   };
-
-  const EventSkeleton = () => (
-    <div className="animate-pulse">
-      <div className="bg-gray-700 rounded-lg h-80 mb-4"></div>
-      <div className="space-y-2">
-        <div className="h-4 bg-gray-700 rounded w-3/4"></div>
-        <div className="h-4 bg-gray-700 rounded w-1/2"></div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-800 to-black relative overflow-hidden pt-16">
@@ -112,7 +156,6 @@ export default function EventDeleteDisplayPage() {
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-orange-500 mx-auto rounded-full"></div>
 
-          {/* Warning Notice */}
           <div className="max-w-2xl mx-auto mt-8">
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 flex items-center gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
@@ -123,67 +166,20 @@ export default function EventDeleteDisplayPage() {
               </p>
             </div>
           </div>
+          <EventSearch
+            filters={filters}
+            setFilters={setFilters}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            onApplyFilters={applyFilters}
+            onClearFilters={clearFilters}
+            onRefresh={handleRefresh}
+            loading={loading}
+            eventTypes={eventTypes}
+            uniqueLocations={uniqueLocations}
+          />
         </div>
 
-        <div
-          className={`max-w-4xl mx-auto mb-12 transition-all duration-1000 delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/40">
-            <div className="flex flex-col md:flex-row gap-4 items-center">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <Input
-                  type="text"
-                  placeholder="Search events to delete by name or location..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-red-400 focus:ring-red-400/50"
-                />
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-                >
-                  <Filter className="w-4 h-4 mr-2" />
-                  Filter
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRefresh}
-                  disabled={loading}
-                  className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-                >
-                  <RefreshCw
-                    className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`}
-                  />
-                  Refresh
-                </Button>
-              </div>
-            </div>
-
-            {/* Stats Bar */}
-            <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-400">
-              <div className="flex items-center gap-2">
-                <span>
-                  {filteredEvents.length} Events Available for Deletion
-                </span>
-              </div>
-              {searchTerm && (
-                <div className="flex items-center gap-2">
-                  <Search className="w-4 h-4 text-red-400" />
-                  <span>Filtered by: "{searchTerm}"</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Error State */}
         {error && (
           <div className="max-w-2xl mx-auto mb-8">
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-center">
@@ -201,12 +197,14 @@ export default function EventDeleteDisplayPage() {
           </div>
         )}
 
-        {/* Events Grid */}
         <div className="max-w-7xl mx-auto">
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
               {[...Array(6)].map((_, index) => (
-                <EventSkeleton key={index} />
+                <div
+                  key={index}
+                  className="animate-pulse bg-gray-700 rounded-lg h-80 mb-4"
+                ></div>
               ))}
             </div>
           ) : (
@@ -216,21 +214,21 @@ export default function EventDeleteDisplayPage() {
               }`}
             >
               {filteredEvents.length === 0 ? (
-                <div className="text-center py-20">
-                  <div className="max-w-md mx-auto">
-                    <div className="w-24 h-24 mx-auto mb-6 bg-gray-700 rounded-full flex items-center justify-center">
-                      <Calendar className="w-12 h-12 text-gray-500" />
-                    </div>
-                    <h3 className="text-2xl font-semibold text-white mb-4">
-                      {searchTerm
-                        ? "No matching events found"
-                        : "No events available for deletion"}
-                    </h3>
-                    <p className="text-gray-400 mb-6">
-                      {searchTerm
-                        ? `We couldn't find any events matching "${searchTerm}". Try adjusting your search terms.`
-                        : "There are currently no events to delete. All events may have already been removed."}
-                    </p>
+                <div className="text-center py-20 max-w-md mx-auto">
+                  <div className="w-24 h-24 mx-auto mb-6 bg-gray-700 rounded-full flex items-center justify-center">
+                    <Calendar className="w-12 h-12 text-gray-500" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-white mb-4">
+                    {searchTerm || hasActiveFilters
+                      ? "No matching events found"
+                      : "No events available"}
+                  </h3>
+                  <p className="text-gray-400 mb-6">
+                    {searchTerm || hasActiveFilters
+                      ? "We couldn't find any events matching your criteria. Try adjusting your search or filters."
+                      : "There are currently no events to display. Check back later for new events."}
+                  </p>
+                  <div className="flex gap-2 justify-center">
                     {searchTerm && (
                       <Button
                         onClick={() => setSearchTerm("")}
@@ -238,6 +236,15 @@ export default function EventDeleteDisplayPage() {
                         className="bg-white/10 border-white/20 text-white hover:bg-white/20"
                       >
                         Clear Search
+                      </Button>
+                    )}
+                    {hasActiveFilters && (
+                      <Button
+                        onClick={clearFilters}
+                        variant="outline"
+                        className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                      >
+                        Clear Filters
                       </Button>
                     )}
                   </div>
@@ -257,6 +264,7 @@ export default function EventDeleteDisplayPage() {
                         {...event}
                         onAction={handleDelete}
                         onViewDetails={handleViewDetails}
+                        onViewRegistrations={handleViewRegistrations}
                       />
                     </div>
                   ))}

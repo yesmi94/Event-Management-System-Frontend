@@ -31,14 +31,19 @@ export const getFilteredEvents = async (
   params.append("pageSize", String(pageSize));
 
   const response = await api.get(`/events/filtered?${params.toString()}`);
+  console.log(response.data);
   return response.data;
 };
 
-
-export const getSearchedEvents = async (searchTerm: string, page: number, pageSize: number) => {
+export const getSearchedEvents = async (
+  searchTerm: string,
+  page: number,
+  pageSize: number,
+) => {
   return api.get("/events/searched", {
     params: { searchTerm, page, pageSize },
-})};
+  });
+};
 
 export const getEventById = async (id: string) => {
   const res = await api.get(`/events/${id}`);
