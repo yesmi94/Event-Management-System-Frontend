@@ -55,20 +55,23 @@ export default function CreateEventPage() {
 
   return (
     <div
-      className="flex flex-col min-h-screen bg-cover bg-center pb-20 px-90"
+      className="flex flex-col min-h-screen bg-cover bg-center pb-8 sm:pb-12 md:pb-16 lg:pb-20 px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-90"
       style={{ backgroundImage: "url('/add-event-background.jpg')" }}
     >
-      <h1 className="font-bold text-center mb-10 text-gray-300 pt-20">
-        Create and share an unforgettable event ...
-      </h1>
-      <Card className="backdrop-blur-md bg-white/30">
-        <CardHeader>
-          <CardTitle className="text-2xl"></CardTitle>
-        </CardHeader>
-        <CardContent>
-          <AddEventForm onSubmit={handleAddEvent} onFileChange={setFile} />
-        </CardContent>
-      </Card>
+      <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full">
+        <h1 className="font-bold text-center mb-6 sm:mb-8 md:mb-10 text-gray-300 pt-8 sm:pt-12 md:pt-16 lg:pt-20 text-lg sm:text-xl md:text-2xl lg:text-3xl px-4">
+          Create and share an unforgettable event ...
+        </h1>
+        
+        <Card className="backdrop-blur-md bg-white/30 w-full shadow-lg">
+          <CardHeader className="pb-4 sm:pb-6">
+            <CardTitle className="text-xl sm:text-2xl text-center text-gray-800"></CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 sm:px-6 md:px-8">
+            <AddEventForm onSubmit={handleAddEvent} onFileChange={setFile} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

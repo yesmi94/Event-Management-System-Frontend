@@ -64,16 +64,20 @@ export const EventUpdatePage = () => {
   };
 
   return (
-    <div className="px-40 pb-30 bg-black pt-30">
-      {eventData ? (
-        <UpdateEventForm
-          event={eventData}
-          onSubmit={handleUpdate}
-          onFileChange={handleFileChange}
-        />
-      ) : (
-        <p className="text-center">Loading event details...</p>
-      )}
+    <div className="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 pb-8 sm:pb-12 md:pb-20 lg:pb-30 bg-black pt-8 sm:pt-12 md:pt-20 lg:pt-30 min-h-screen">
+      <div className="max-w-4xl mx-auto">
+        {eventData ? (
+          <UpdateEventForm
+            event={eventData}
+            onSubmit={handleUpdate}
+            onFileChange={handleFileChange}
+          />
+        ) : (
+          <div className="flex items-center justify-center min-h-[50vh]">
+            <p className="text-center text-white text-lg">Loading event details...</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
