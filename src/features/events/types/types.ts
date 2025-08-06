@@ -11,6 +11,7 @@ export interface EventFormData {
   organization: string;
   capacity: number;
   eventImageUrl?: string;
+  remainingSpots: number;
 }
 
 export interface EventCardProps {
@@ -21,6 +22,7 @@ export interface EventCardProps {
   cutoffDate: Date;
   location: string;
   eventImageUrl?: string;
+  remainingSpots: number;
   onAction: (id: string) => void;
   onViewDetails: (id: string) => void;
   onViewRegistrations: (id: string) => void;

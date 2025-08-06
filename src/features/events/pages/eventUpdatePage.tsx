@@ -46,7 +46,7 @@ export const EventUpdatePage = () => {
       if (imageFile) {
         const formData = new FormData();
         formData.append("file", imageFile);
-        const uploadResponse = await uploadEventImage(updatedId, formData);
+        await uploadEventImage(updatedId, formData);
       }
 
       toast.success("Event updated successfully!");

@@ -45,7 +45,7 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({
   const [isVisible, { setTrue }] = useBoolean();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
-  const [error, setError] = useState("");
+  const [, setError] = useState("");
 
   const {
     register,

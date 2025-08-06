@@ -20,6 +20,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   location,
   cutoffDate,
   eventImageUrl,
+  remainingSpots,
   onAction,
   onViewDetails,
   onViewRegistrations,
@@ -65,6 +66,10 @@ export const EventCard: React.FC<EventCardProps> = ({
             {format(new Date(cutoffDate), "PPP")}
           </li>
         </ul>
+        <div className="text-white font-semibold text-center">
+          {remainingSpots} spots are remaining
+        </div>
+        
       </CardContent>
 
       <CardFooter className="flex flex-col gap-3 px-4 pb-4">

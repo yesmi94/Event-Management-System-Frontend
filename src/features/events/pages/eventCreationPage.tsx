@@ -26,7 +26,7 @@ export default function CreateEventPage() {
         const formData = new FormData();
         formData.append("file", imageFile);
 
-        const uploadResponse = await uploadEventImage(eventId, formData);
+        await uploadEventImage(eventId, formData);
         toast.success("Event created successfully");
       }
 

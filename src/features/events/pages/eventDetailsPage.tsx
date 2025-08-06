@@ -79,6 +79,7 @@ export default function EventDetailsPage() {
       const response = await RegisterForEvent(data);
       const eventId = response.data?.eventId;
       data.id = response.id;
+      event.capacity -= 1;
 
       if (!eventId) {
         toast.error("Failed to register for the event");
