@@ -31,22 +31,23 @@ import {
   CheckCircle,
   Upload,
 } from "lucide-react";
+import { useBoolean } from "@/shared/hooks/useBoolean";
 
 export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
   const [eventTypes, setEventTypes] = useState<EventTypeOption[]>([]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, { setTrue }] = useBoolean();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
+  const [, setError] = useState("");
 
   useEffect(() => {
-    setIsVisible(true);
+    setTrue();
     getEventTypes()
       .then((value) => {
         setEventTypes(value);
-        console.log("Raw events data:", value);
       })
       .catch((err: any) => {
-        console.error("Failed to fetch event types", err);
+        setError(err);
       });
   }, []);
 
@@ -105,13 +106,11 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
     getEventTypes()
       .then((value) => {
         setEventTypes(value);
-        console.log("Raw events data:", value);
       })
       .catch((err: any) => {
-        console.error("Failed to fetch event types", err);
+        setError(`Failed to fetch event types: ${err}`);
       });
   }, []);
-  console.log(eventTypes);
 
   const FormSection: React.FC<{
     title: string;

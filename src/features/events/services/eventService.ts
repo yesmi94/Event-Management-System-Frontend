@@ -31,7 +31,6 @@ export const getFilteredEvents = async (
   params.append("pageSize", String(pageSize));
 
   const response = await api.get(`/events/filtered?${params.toString()}`);
-  console.log(response.data);
   return response.data;
 };
 
@@ -81,7 +80,6 @@ export const getEventImage = async (id: string) => {
 
 export const getRegistrationsForEvent = async (id: string) => {
   const res = await api.get(`/events/${id}/registrations`);
-  console.log(res.data);
   return res.data;
 };
 

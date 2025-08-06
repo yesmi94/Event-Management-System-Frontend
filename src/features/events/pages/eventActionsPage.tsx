@@ -7,14 +7,15 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useBoolean } from "@/shared/hooks/useBoolean";
 
 const EventActionsPage = () => {
   const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, { setTrue }] = useBoolean();
 
   useEffect(() => {
-    setIsVisible(true);
+    setTrue();
   }, []);
 
   const actions = [

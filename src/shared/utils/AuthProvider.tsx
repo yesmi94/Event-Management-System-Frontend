@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   if (isLoading) {
-    return <Spinner></Spinner>
+    return <Spinner></Spinner>;
   }
 
   if (error) {
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   if (!isAuthenticated) {
-    return <Spinner></Spinner>
+    return <Spinner></Spinner>;
   }
 
   return <>{children}</>;

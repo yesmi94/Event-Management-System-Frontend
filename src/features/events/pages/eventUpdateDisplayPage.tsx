@@ -9,12 +9,13 @@ import type {
 import { RefreshCw, ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EventSearch from "../components/eventSearch";
+import { useBoolean } from "@/shared/hooks/useBoolean";
 
 export default function EventUpdateDisplayPage() {
   const [events, setEvents] = useState<EventCardProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, { setTrue }] = useBoolean();
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -29,7 +30,7 @@ export default function EventUpdateDisplayPage() {
 
   useEffect(() => {
     fetchEvents();
-    setIsVisible(true);
+    setTrue();
   }, [page]);
 
   const uniqueLocations = [
@@ -43,7 +44,7 @@ export default function EventUpdateDisplayPage() {
         setEventTypes(value);
       })
       .catch((err: any) => {
-        console.error("Failed to fetch event types", err);
+        setError(`Failed to fetch event types: ${err}`);
       });
   }, []);
 
@@ -63,7 +64,6 @@ export default function EventUpdateDisplayPage() {
       );
 
       setEvents(response.data.items);
-      console.log(response.data.items);
       setTotalPages(response.data.totalPages);
     } catch (err) {
       setError("Failed to load events");

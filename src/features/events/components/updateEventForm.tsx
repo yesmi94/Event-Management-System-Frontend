@@ -34,6 +34,7 @@ import {
   Upload,
   Edit3,
 } from "lucide-react";
+import { useBoolean } from "@/shared/hooks/useBoolean";
 
 export const UpdateEventForm: React.FC<UpdateFormProps> = ({
   event,
@@ -41,9 +42,10 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({
   onFileChange,
 }) => {
   const [eventTypes, setEventTypes] = useState<EventTypeOption[]>([]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, { setTrue }] = useBoolean();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
+  const [error, setError] = useState("");
 
   const {
     register,
@@ -57,10 +59,10 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({
   });
 
   useEffect(() => {
-    setIsVisible(true);
+    setTrue();
     getEventTypes()
       .then((value) => setEventTypes(value))
-      .catch((err) => console.error("Failed to fetch event types", err));
+      .catch((err) => setError(`Failed to fetch event types: ${err}`));
   }, []);
 
   useEffect(() => {

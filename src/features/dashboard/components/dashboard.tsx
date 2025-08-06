@@ -17,8 +17,6 @@ export function DashboardSection() {
       .finally(() => setLoading(false));
   }, []);
 
-  console.log(stats);
-
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">

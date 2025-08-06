@@ -9,6 +9,7 @@ import type {
 import { ArrowLeft, ArrowRight, Calendar, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EventSearch from "../components/eventSearch";
+import { useBoolean } from "@/shared/hooks/useBoolean";
 
 export default function EventsDisplayPage() {
   const [events, setEvents] = useState<EventCardProps[]>([]);
@@ -17,7 +18,7 @@ export default function EventsDisplayPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, { setTrue }] = useBoolean();
   const [eventTypes, setEventTypes] = useState<EventTypeOption[]>([]);
 
   const [filters, setFilters] = useState<FilterOptions>({
@@ -39,7 +40,7 @@ export default function EventsDisplayPage() {
         setEventTypes(value);
       })
       .catch((err: any) => {
-        console.error("Failed to fetch event types", err);
+        setError(`Failed to fetch event types: ${err}`);
       });
   }, []);
 
@@ -59,7 +60,6 @@ export default function EventsDisplayPage() {
       );
 
       setEvents(response.data.items);
-      console.log(response.data.items);
       setTotalPages(response.data.totalPages);
     } catch (err) {
       setError("Failed to load events");
@@ -70,7 +70,7 @@ export default function EventsDisplayPage() {
 
   useEffect(() => {
     fetchEvents();
-    setIsVisible(true);
+    setTrue();
   }, [page]);
 
   const handleViewDetails = (id: string) => {

@@ -18,9 +18,8 @@ const MyRegistrationsPage = () => {
       try {
         const response = await getRegistrationsForUser();
         setRegistrations(response.data);
-        console.log("Raw Registrations data:", response.data);
       } catch (error) {
-        console.error("Error fetching registrations:", error);
+        toast.error("Failed to fetch Registrations");
       }
     };
 
@@ -34,8 +33,7 @@ const MyRegistrationsPage = () => {
       toast.success("Registration cancelled successfully");
       setRegistrations((prev) => prev.filter((e) => e.id !== id));
     } catch (error) {
-      toast.error("Failed to delete event");
-      console.error("Registration cancellation failed", error);
+      toast.error("Registration cancellation failed");
     }
   };
 

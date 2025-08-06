@@ -11,12 +11,7 @@ import type {
   FilterOptions,
 } from "../types/types";
 import { toast } from "react-toastify";
-import {
-  Calendar,
-  RefreshCw,
-  Trash2,
-  AlertTriangle,
-} from "lucide-react";
+import { Calendar, RefreshCw, Trash2, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EventSearch from "../components/eventSearch";
 
@@ -47,15 +42,13 @@ export default function EventDeleteDisplayPage() {
     ...new Set(events.map((event) => event.location)),
   ].filter(Boolean);
 
-
-
   useEffect(() => {
     getEventTypes()
       .then((value) => {
         setEventTypes(value);
       })
       .catch((err: any) => {
-        console.error("Failed to fetch event types", err);
+        setError(`Failed to fetch event types: ${err}`);
       });
   }, []);
 
@@ -75,7 +68,6 @@ export default function EventDeleteDisplayPage() {
       );
 
       setFilteredEvents(response.data.items);
-      console.log(response.data.items);
       setTotalPages(response.data.totalPages);
     } catch (err) {
       setError("Failed to load events");
@@ -121,7 +113,6 @@ export default function EventDeleteDisplayPage() {
       setEvents((prev) => prev.filter((e) => e.id !== id));
     } catch (error) {
       toast.error("Failed to delete event");
-      console.error("Delete failed", error);
     }
   };
 

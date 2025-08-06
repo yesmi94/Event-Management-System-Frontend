@@ -15,9 +15,7 @@ export default function CreateEventPage() {
   const handleAddEvent = async (data: EventFormData) => {
     try {
       const response = await createEvent(data);
-      console.log(response);
       const eventId = response.data?.id;
-      console.log(eventId);
 
       if (!eventId) {
         toast.error("Failed to create the event");
@@ -29,7 +27,6 @@ export default function CreateEventPage() {
         formData.append("file", imageFile);
 
         const uploadResponse = await uploadEventImage(eventId, formData);
-        console.log("Image uploaded:", uploadResponse.data.imageUrl);
         toast.success("Event created successfully");
       }
 
@@ -62,7 +59,7 @@ export default function CreateEventPage() {
         <h1 className="font-bold text-center mb-6 sm:mb-8 md:mb-10 text-gray-300 pt-8 sm:pt-12 md:pt-16 lg:pt-20 text-lg sm:text-xl md:text-2xl lg:text-3xl px-4">
           Create and share an unforgettable event ...
         </h1>
-        
+
         <Card className="backdrop-blur-md bg-white/30 w-full shadow-lg">
           <CardHeader className="pb-4 sm:pb-6">
             <CardTitle className="text-xl sm:text-2xl text-center text-gray-800"></CardTitle>

@@ -9,8 +9,8 @@ const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   if (!keycloak.authenticated) {
     keycloak.login();
     return null;
-    }
-    
+  }
+
   return keycloak?.authenticated ? children : <Navigate to="/login" />;
 };
 

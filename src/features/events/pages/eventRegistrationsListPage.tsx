@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { UserEventRegistrationData } from "@/features/users/types/types";
 import { useParams } from "react-router-dom";
+import { useBoolean } from "@/shared/hooks/useBoolean";
 
 const EventRegistrationsListPage = () => {
   const [filteredRegistrations, setFilteredRegistrations] = useState<
@@ -12,7 +13,7 @@ const EventRegistrationsListPage = () => {
   >([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, { setTrue }] = useBoolean();
   const [error, setError] = useState<string | null>(null);
   const [registrations, setRegistrations] = useState<
     UserEventRegistrationData[]
@@ -20,14 +21,13 @@ const EventRegistrationsListPage = () => {
   const { eventId } = useParams();
 
   useEffect(() => {
-    console.log("Event ID from URL:", eventId);
     if (eventId) {
       fetchRegistrations(eventId);
     }
   }, [eventId]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setIsVisible(true), 100);
+    const timeout = setTimeout(() => setTrue(), 100);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -49,14 +49,11 @@ const EventRegistrationsListPage = () => {
       setLoading(true);
       setError(null);
       const response = await getRegistrationsForEvent(id);
-      console.log("Raw response:", response);
 
       const items = response.data;
-      console.log("Registrations extracted:", items);
 
       setRegistrations(items);
     } catch (err: any) {
-      console.error("Error fetching registrations:", err?.response || err);
       setError("Failed to load registrations. Please try again.");
     } finally {
       setLoading(false);

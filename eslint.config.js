@@ -20,15 +20,15 @@ export default tseslint.config([
       prettier: pluginPrettier,
     },
     rules: {
-      // Enables prettier formatting as ESLint error
       'prettier/prettier': 'error',
+      'no-console': ['error', { allow: ['warn', 'error'] }]
     },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
       reactHooks.configs['recommended-latest'],
       reactRefresh.configs.vite,
-      prettier, // This disables conflicting formatting rules
+      prettier,
     ],
   }
 ]);

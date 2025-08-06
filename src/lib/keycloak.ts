@@ -7,6 +7,5 @@ const keycloakConfig: KeycloakConfig = {
 };
 
 const keyCloak = new Keycloak(keycloakConfig);
-console.log(keyCloak.token);
 
 export default keyCloak;

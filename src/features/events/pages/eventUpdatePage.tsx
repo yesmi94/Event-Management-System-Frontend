@@ -26,7 +26,6 @@ export const EventUpdatePage = () => {
       getEventById(id)
         .then((response) => {
           setEventData(response.data);
-          console.log("Raw events data:", response.data);
         })
         .catch(console.error);
     };
@@ -48,13 +47,11 @@ export const EventUpdatePage = () => {
         const formData = new FormData();
         formData.append("file", imageFile);
         const uploadResponse = await uploadEventImage(updatedId, formData);
-        console.log("Image uploaded:", uploadResponse.data.imageUrl);
       }
 
       toast.success("Event updated successfully!");
       navigate(`/events/${updatedId}`);
     } catch (error) {
-      console.error("Error updating event", error);
       toast.error("Failed to update the event.");
     }
   };
@@ -74,7 +71,9 @@ export const EventUpdatePage = () => {
           />
         ) : (
           <div className="flex items-center justify-center min-h-[50vh]">
-            <p className="text-center text-white text-lg">Loading event details...</p>
+            <p className="text-center text-white text-lg">
+              Loading event details...
+            </p>
           </div>
         )}
       </div>
