@@ -16,9 +16,9 @@ jobs:
       contents: read
       id-token: write
     env:
-      REACT_APP_KEYCLOAK_URL: ${{ secrets.KEYCLOAK_URL }}
-      REACT_APP_KEYCLOAK_REALM: ${{ secrets.KEYCLOAK_REALM }}
-      REACT_APP_KEYCLOAK_CLIENT_ID: ${{ secrets.KEYCLOAK_CLIENT_ID }}
+      REACT_APP_KEYCLOAK_URL: ${{ secrets.REACT_APP_KEYCLOAK_URL }}
+      REACT_APP_KEYCLOAK_REALM: ${{ secrets.REACT_APP_KEYCLOAK_REALM }}
+      REACT_APP_KEYCLOAK_CLIENT_ID: ${{ secrets.REACT_APP_KEYCLOAK_CLIENT_ID }}
     steps:
       - uses: actions/checkout@v3
 
@@ -41,3 +41,4 @@ jobs:
           app_location: "/"
           api_location: ""
           output_location: "dist"
+
