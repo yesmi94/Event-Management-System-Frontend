@@ -25,7 +25,7 @@ export function ConfirmationDialog({
   dialogTitle,
 }: ConfirmationDialogProps) {
   return (
-    <Dialog open={isOpen} onOpenChange={(val) => !val && onClose()}>
+    <Dialog open={isOpen} onOpenChange={(val: any) => !val && onClose()}>
       <form
         onSubmit={(e) => {
           e.preventDefault();

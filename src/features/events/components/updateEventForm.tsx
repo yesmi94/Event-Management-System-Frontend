@@ -18,7 +18,8 @@ import type {
   EventTypeOption,
   UpdateFormProps,
 } from "../types/types";
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { DateOnlyPicker } from "./dateOnlyPicker";
 import { getEventTypes } from "../services/eventService";
 import {
@@ -193,7 +194,7 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({
 
                 <FormField label="Event Type" error={errors.type?.message}>
                   <Select
-                    onValueChange={(value) =>
+                    onValueChange={(value: any) =>
                       setValue("type", Number(value), { shouldValidate: true })
                     }
                   >

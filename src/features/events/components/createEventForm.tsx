@@ -16,7 +16,8 @@ import {
 } from "@/components/ui/select";
 import { eventSchema } from "../schemas/eventSchema";
 import type { EventFormData, EventTypeOption, Props } from "../types/types";
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { DateOnlyPicker } from "./dateOnlyPicker";
 import { getEventTypes } from "../services/eventService";
 import {
@@ -199,7 +200,7 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
 
                 <FormField label="Event Type" error={errors.type?.message}>
                   <Select
-                    onValueChange={(value) =>
+                    onValueChange={(value: any) =>
                       setValue("type", Number(value), { shouldValidate: true })
                     }
                   >

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import * as React from "react";
+import { useState } from "react";
 import type { EventRegistrationCardProps } from "../types/types";
 import { ConfirmationDialog } from "@/features/common/components/confirmationDialog";
 
