@@ -14,7 +14,7 @@ export const useKeycloak = () => {
       email?: string;
       name?: string;
       phone_number?: string;
-      realm_access?: {
+      "event-system-backend"?: {
         roles: string[];
       };
     },

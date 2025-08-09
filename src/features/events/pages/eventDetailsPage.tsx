@@ -128,10 +128,6 @@ export default function EventDetailsPage() {
             <CalendarIcon size={18} />
             {eventDateFormatted}
           </div>
-          <div className="flex items-center gap-2 text-red-400">
-            <CalendarIcon size={18} />
-            {format(event.cutoffDate, "PPP")}
-          </div>
           <div className="flex items-center gap-2 text-white">
             <ClockIcon size={18} />
             {eventTimeFormatted}
@@ -147,6 +143,12 @@ export default function EventDetailsPage() {
           <Badge variant="outline" className="text-sm capitalize text-white">
             {event.type}
           </Badge>
+        </div>
+        <div className="text-red-400 flex items-center">
+          <CalendarIcon size={18} />{" "}
+          <span className="pl-3">
+            Register Before {format(event.cutoffDate, "PPP")}
+          </span>
         </div>
 
         <hr className="border-gray-700" />
@@ -166,6 +168,16 @@ export default function EventDetailsPage() {
           <h3 className="text-lg font-medium text-white mb-1">Organized by</h3>
           <p className="text-white font-semibold">{event.organization}</p>
         </div>
+
+        <hr className="border-gray-700" />
+
+        <div>
+          <h3 className="text-lg font-medium text-white mb-1">Availability</h3>
+          <p className="text-white font-semibold">
+            {event.remainingSpots}/{event.capacity}
+          </p>
+        </div>
+        <p className="text-white font-semibold">Reserve your spot today</p>
 
         {hasRole("Public User") && !isRegistrationClosed && (
           <div className="pt-6">

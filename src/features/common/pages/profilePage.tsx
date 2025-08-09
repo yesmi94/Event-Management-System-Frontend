@@ -35,7 +35,6 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-black to-black relative overflow-hidden">
-      {/* Animated background */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 left-20 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
@@ -44,7 +43,6 @@ export default function ProfilePage() {
 
       <div className="relative z-10 pt-20 px-6 pb-12">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
           <div
             className={`text-center mb-12 transition-all duration-1000 ${
               isVisible
@@ -61,7 +59,6 @@ export default function ProfilePage() {
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
           </div>
 
-          {/* Single Column Profile Card */}
           <div className="max-w-2xl mx-auto">
             <div
               className={`bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/10 text-center transition-all duration-1000 ${
@@ -71,7 +68,6 @@ export default function ProfilePage() {
               }`}
               style={{ transitionDelay: "200ms" }}
             >
-              {/* Profile Picture */}
               <div className="relative mb-6">
                 {user?.profileImage ? (
                   <div className="relative">
@@ -88,18 +84,15 @@ export default function ProfilePage() {
                   </div>
                 )}
 
-                {/* Online Status */}
                 <div className="absolute bottom-2 right-1/2 transform translate-x-12">
                   <div className="w-4 h-4 bg-green-500 rounded-full border-2 border-white/20"></div>
                 </div>
               </div>
 
-              {/* User Name */}
               <h2 className="text-3xl font-bold text-white mb-8">
                 {user?.name || "User Name"}
               </h2>
 
-              {/* Contact Information */}
               <div className="space-y-4 mb-8">
                 <InfoItem
                   icon={<MailIcon className="w-5 h-5" />}
@@ -115,7 +108,6 @@ export default function ProfilePage() {
                 />
               </div>
 
-              {/* Action Buttons */}
               <div className="space-y-3">
                 <Button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <Edit3 className="w-4 h-4 mr-2" />

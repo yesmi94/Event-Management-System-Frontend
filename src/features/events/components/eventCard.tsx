@@ -11,6 +11,8 @@ import { format } from "date-fns";
 import { useRole } from "@/shared/hooks/useRole";
 import type { EventCardProps } from "../types/types";
 import { useCurrentEventPage } from "@/shared/hooks/useCurrentPage";
+import { useState } from "react";
+import { ConfirmationDialog } from "@/features/common/components/confirmationDialog";
 
 export const EventCard: React.FC<EventCardProps> = ({
   id,
@@ -29,6 +31,11 @@ export const EventCard: React.FC<EventCardProps> = ({
   const { isUpdatePage, isDeletePage, isBrowsePage } = useCurrentEventPage();
   const today = new Date();
   const isRegistrationClosed = new Date(cutoffDate) < today;
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  
+  const handleConfirmationClick = () => {
+    setIsDialogOpen(true);
+  };
 
   return (
     <Card className="w-full pt-0 max-w-sm rounded-xl bg-white/10 backdrop-blur-md border border-white/10 shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
@@ -66,10 +73,9 @@ export const EventCard: React.FC<EventCardProps> = ({
             {format(new Date(cutoffDate), "PPP")}
           </li>
         </ul>
-        <div className="text-white font-semibold text-center">
-          {remainingSpots} spots are remaining
+        <div className="text-green-300 font-semibold">
+          {remainingSpots} Spots are Remaining
         </div>
-        
       </CardContent>
 
       <CardFooter className="flex flex-col gap-3 px-4 pb-4">
@@ -102,11 +108,22 @@ export const EventCard: React.FC<EventCardProps> = ({
                 ? "bg-yellow-600 hover:bg-yellow-500"
                 : "bg-red-600 hover:bg-red-500"
             } text-white transition`}
-            onClick={() => onAction(id)}
+            onClick={handleConfirmationClick}
           >
             {isUpdatePage ? "Update the Event" : "Delete the Event"}
           </Button>
         )}
+
+        {isDeletePage && (
+          <ConfirmationDialog
+            isOpen={isDialogOpen}
+            onClose={() => setIsDialogOpen(false)}
+            onConfirm={() => onAction(id)}
+            message="Your are about to delete this Event. Do you want to continue ?"
+            dialogTitle="Delete Event"
+          />
+        )}
+
       </CardFooter>
     </Card>
   );

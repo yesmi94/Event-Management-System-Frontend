@@ -1,7 +1,7 @@
 import Keycloak, { type KeycloakConfig } from "keycloak-js";
 
 const keycloakConfig: KeycloakConfig = {
-  url: "http://localhost:8080",
+  url: "https://web-app-event-management-keycloak.azurewebsites.net",
   realm: "event-management-system",
   clientId: "event-system-backend",
 };

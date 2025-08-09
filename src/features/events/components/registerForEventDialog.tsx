@@ -45,8 +45,6 @@ export function RegisterForEventDialog({
     },
   });
 
-  console.log("Public user Id" + user?.sub);
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <form onSubmit={handleSubmit(onSubmit)}>

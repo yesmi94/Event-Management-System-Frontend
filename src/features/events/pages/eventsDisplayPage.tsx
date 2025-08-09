@@ -62,7 +62,7 @@ export default function EventsDisplayPage() {
       setEvents(response.data.items);
       setTotalPages(response.data.totalPages);
     } catch (err) {
-      setError("Failed to load events");
+      setError(`Failed to load events: ${err}`);
     } finally {
       setLoading(false);
     }

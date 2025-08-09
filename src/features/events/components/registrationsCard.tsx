@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import type { EventRegistrationCardProps } from "../types/types";
+import { ConfirmationDialog } from "@/features/common/components/confirmationDialog";
 
 const EventRegistrationCard: React.FC<EventRegistrationCardProps> = ({
   eventImageUrl,
@@ -11,6 +12,11 @@ const EventRegistrationCard: React.FC<EventRegistrationCardProps> = ({
   eventTime,
   onCancel,
 }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleConfirmationClick = () => {
+    setIsDialogOpen(true);
+  };
   return (
     <div
       className="relative w-full max-w-sm h-72 rounded-2xl shadow-lg overflow-hidden bg-cover bg-center"
@@ -31,13 +37,20 @@ const EventRegistrationCard: React.FC<EventRegistrationCardProps> = ({
 
         <div className="text-right">
           <button
-            onClick={onCancel}
+            onClick={handleConfirmationClick}
             className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm transition"
           >
             Cancel Registration
           </button>
         </div>
       </div>
+      <ConfirmationDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onConfirm={onCancel}
+        message="Your are about to cancel your registration for this Event. Do you want to continue ?"
+        dialogTitle="Cancel Registration"
+      />
     </div>
   );
 };

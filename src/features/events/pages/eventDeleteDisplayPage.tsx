@@ -148,7 +148,7 @@ export default function EventDeleteDisplayPage() {
           <div className="w-24 h-1 bg-gradient-to-r from-red-500 to-orange-500 mx-auto rounded-full"></div>
 
           <div className="max-w-2xl mx-auto mt-8">
-            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 flex items-center gap-3">
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 flex items-center gap-3 mb-10">
               <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
               <p className="text-red-300 text-sm">
                 <strong>Warning:</strong> Deleting an event is permanent and
@@ -157,7 +157,8 @@ export default function EventDeleteDisplayPage() {
               </p>
             </div>
           </div>
-          <EventSearch
+          <div className="pt-8 px-6 pb-6 max-w-5xl mx-auto mb-12">
+            <EventSearch
             filters={filters}
             setFilters={setFilters}
             searchTerm={searchTerm}
@@ -169,6 +170,8 @@ export default function EventDeleteDisplayPage() {
             eventTypes={eventTypes}
             uniqueLocations={uniqueLocations}
           />
+          </div>
+          
         </div>
 
         {error && (

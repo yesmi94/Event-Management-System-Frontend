@@ -45,6 +45,7 @@ export interface EventDetails {
   organization: string;
   capacity: number;
   type: string;
+  remainingSpots: number;
 }
 
 export interface Event {

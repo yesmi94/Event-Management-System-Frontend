@@ -3,14 +3,20 @@ import { AddEventForm } from "../components/createEventForm";
 import type { EventFormData } from "../types/types";
 import { createEvent, uploadEventImage } from "../services/eventService";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import type { AxiosError } from "axios";
 import axios from "axios";
+import { useBoolean } from "@/shared/hooks/useBoolean";
 
 export default function CreateEventPage() {
   const navigate = useNavigate();
   const [imageFile, setFile] = useState<File | null>(null);
+  const [isVisible, { setTrue }] = useBoolean();
+
+  useEffect(() => {
+    setTrue();
+  }, []);
 
   const handleAddEvent = async (data: EventFormData) => {
     try {
@@ -51,23 +57,56 @@ export default function CreateEventPage() {
   };
 
   return (
-    <div
-      className="flex flex-col min-h-screen bg-cover bg-center pb-8 sm:pb-12 md:pb-16 lg:pb-20 px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 2xl:px-90"
-      style={{ backgroundImage: "url('/add-event-background.jpg')" }}
-    >
-      <div className="flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full">
-        <h1 className="font-bold text-center mb-6 sm:mb-8 md:mb-10 text-gray-300 pt-8 sm:pt-12 md:pt-16 lg:pt-20 text-lg sm:text-xl md:text-2xl lg:text-3xl px-4">
-          Create and share an unforgettable event ...
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden pt-16">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000"></div>
+      </div>
 
-        <Card className="backdrop-blur-md bg-white/30 w-full shadow-lg">
-          <CardHeader className="pb-4 sm:pb-6">
-            <CardTitle className="text-xl sm:text-2xl text-center text-gray-800"></CardTitle>
-          </CardHeader>
-          <CardContent className="px-4 sm:px-6 md:px-8">
-            <AddEventForm onSubmit={handleAddEvent} onFileChange={setFile} />
-          </CardContent>
-        </Card>
+      <div className="relative z-10 p-8 max-w-4xl mx-auto">
+        {/* Header */}
+        <div
+          className={`text-center mb-12 transition-all duration-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"
+          }`}
+        >
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+            Create Event
+          </h1>
+          <p className="text-lg text-gray-400 max-w-xl mx-auto">
+            Create and share an unforgettable event
+          </p>
+          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
+        </div>
+
+        {/* Form Card */}
+        <div
+          className={`transition-all duration-1000 delay-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+          }`}
+        >
+          <Card className="backdrop-blur-md bg-white/20 border-white/10 shadow-2xl shadow-purple-500/10 max-w-2xl mx-auto">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-2xl text-center text-white"></CardTitle>
+            </CardHeader>
+            <CardContent className="px-6 md:px-8">
+              <AddEventForm onSubmit={handleAddEvent} onFileChange={setFile} />
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Footer */}
+        <div
+          className={`text-center mt-12 transition-all duration-1000 delay-600 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <p className="text-gray-500 text-sm">
+            Need help? Check our documentation or contact support for assistance.
+          </p>
+        </div>
       </div>
     </div>
   );
