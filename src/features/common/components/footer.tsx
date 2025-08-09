@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Footer: React.FC = () => {
   return (
@@ -8,9 +8,15 @@ const Footer: React.FC = () => {
           &copy; {new Date().getFullYear()} Gatherly. All rights reserved.
         </p>
         <div className="flex gap-4">
-          <a href="/privacy" className="hover:underline text-gray-300">Privacy Policy</a>
-          <a href="/terms" className="hover:underline text-gray-300">Terms of Service</a>
-          <a href="/contact" className="hover:underline text-gray-300">Contact</a>
+          <a href="/privacy" className="hover:underline text-purple-300">
+            Privacy Policy
+          </a>
+          <a href="/terms" className="hover:underline text-purple-300">
+            Terms of Service
+          </a>
+          <a href="/contact" className="hover:underline text-purple-300">
+            Contact
+          </a>
         </div>
       </div>
     </footer>

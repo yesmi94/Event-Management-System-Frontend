@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import { ChevronDownIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { ChevronDownIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import type { DateAndTimePickerProps } from "../types/types"
-import { useState } from "react"
+} from "@/components/ui/popover";
+import type { DateAndTimePickerProps } from "../types/types";
+import { useState } from "react";
 
 export function DateAndTimePicker({ onTimeChange }: DateAndTimePickerProps) {
-  const [open, setOpen] = useState(false)
-  const [date, setDate] = useState<Date>()
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<Date>();
 
   return (
     <div className="flex gap-4">
@@ -40,8 +40,8 @@ export function DateAndTimePicker({ onTimeChange }: DateAndTimePickerProps) {
               selected={date}
               captionLayout="dropdown"
               onSelect={(date) => {
-                setDate(date)
-                setOpen(false)
+                setDate(date);
+                setOpen(false);
               }}
             />
           </PopoverContent>
@@ -58,11 +58,11 @@ export function DateAndTimePicker({ onTimeChange }: DateAndTimePickerProps) {
           step="1"
           defaultValue="10:30:00"
           onChange={(e) => {
-            if (onTimeChange) onTimeChange(e.target.value)
+            if (onTimeChange) onTimeChange(e.target.value);
           }}
           className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
         />
       </div>
     </div>
-  )
+  );
 }
