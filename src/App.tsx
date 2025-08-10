@@ -1,5 +1,5 @@
 // src/App.tsx
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-router-dom";
 
 import Homepage from "./features/common/pages/homepage";
 import AdminNavbar from "./features/users/admins/components/AdminNavbar";
@@ -23,7 +23,7 @@ function App() {
   const { hasRole } = useRole();
 
   return (
-    <Router>
+    <BrowserRouter>
       {hasRole("Admin") ? <AdminNavbar /> : <UserNavbar />}
       <ToastContainer position="top-right" autoClose={3000} />
 
@@ -119,7 +119,7 @@ function App() {
         />
       </Routes>
       <Footer></Footer>
-    </Router>
+    </BrowserRouter>
   );
 }
 

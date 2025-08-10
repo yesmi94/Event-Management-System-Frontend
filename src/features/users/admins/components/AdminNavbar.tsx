@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useKeycloak } from "@/shared/hooks/useKeycloak";
 import { User } from "lucide-react";
 
-export default function AdminNavbar() {
+export default function UserNavbar() {
   const { user } = useKeycloak();
 
   return (
@@ -16,12 +16,12 @@ export default function AdminNavbar() {
           </a>
         </li>
         <li>
-          <a href="/event-actions" className="!text-white hover:!text-gray-400">
+          <a href="/events" className="!text-white hover:!text-gray-400">
             Event Actions
           </a>
         </li>
         <li>
-          <a href="#" className="!text-white hover:!text-gray-400">
+          <a href="/registrations" className="!text-white hover:!text-gray-400">
             About
           </a>
         </li>
