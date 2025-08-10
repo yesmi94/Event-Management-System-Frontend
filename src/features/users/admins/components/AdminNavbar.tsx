@@ -51,7 +51,7 @@ export default function AdminNavbar() {
         </div>
 
         <div className="md:hidden flex items-center space-x-2">
-          <Button variant="ghost" size="sm" className="text-white hover:text-gray-400">
+          <Button variant="ghost" size="sm" className="text-purple-300 hover:text-gray-400">
             <User className="w-5 h-5" />
           </Button>
           <Button
