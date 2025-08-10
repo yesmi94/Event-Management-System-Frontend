@@ -58,7 +58,7 @@ export default function AdminNavbar() {
             variant="ghost"
             size="sm"
             onClick={toggleMenu}
-            className="text-white hover:text-gray-400"
+            className="text-purple-300 hover:text-gray-400"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </Button>
