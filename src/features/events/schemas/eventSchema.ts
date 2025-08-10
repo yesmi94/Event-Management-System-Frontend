@@ -7,7 +7,7 @@ export const eventSchema = z.object({
   organization: z.string().min(3, "Organization is required"),
   type: z.number().min(0).max(9, "Invalid event type"),
   capacity: z.number().min(1, "Capacity must be greater than 0"),
-  remainingSpots: z.number().min(1, "Capacity must be greater than 0"),
+  remainingSpots: z.number().min(1).optional(),
   eventDate: z
     .date()
     .refine((val) => val instanceof Date && !isNaN(val.getTime()), {

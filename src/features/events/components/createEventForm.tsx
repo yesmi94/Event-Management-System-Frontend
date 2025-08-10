@@ -1,6 +1,4 @@
 // src/components/events/AddEventForm.tsx
-
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { Input } from "@/components/ui/input";
@@ -20,6 +18,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { DateOnlyPicker } from "./dateOnlyPicker";
 import { getEventTypes } from "../services/eventService";
+import { useBoolean } from "@/shared/hooks/useBoolean";
+import { useForm } from "react-hook-form";
 import {
   Calendar,
   Clock,
@@ -32,7 +32,6 @@ import {
   CheckCircle,
   Upload,
 } from "lucide-react";
-import { useBoolean } from "@/shared/hooks/useBoolean";
 
 export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
   const [eventTypes, setEventTypes] = useState<EventTypeOption[]>([]);

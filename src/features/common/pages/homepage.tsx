@@ -84,7 +84,7 @@ export default function Homepage() {
                     : "opacity-0 -translate-y-8 scale-95"
                 }`}
             >
-              <span className="text-5xl">
+              <span className="text-5xl italic font-serif">
                 Schedule Your Event With,{" "}
                 <span className="italic font-serif text-5xl">
                   Gatherly

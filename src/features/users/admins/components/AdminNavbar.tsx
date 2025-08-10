@@ -18,7 +18,7 @@ export default function AdminNavbar() {
           Gatherly
         </div>
 
-        <ul className="hidden md:flex space-x-6 lg:space-x-8 items-center">
+        <ul className="hidden md:flex lg:pl-30 space-x-6 lg:space-x-8 items-center">
           <li>
             <a href="/" className="text-white hover:text-gray-400 transition-colors">
               Home
