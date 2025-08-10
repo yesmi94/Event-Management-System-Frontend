@@ -1,5 +1,5 @@
 // src/App.tsx
-import { BrowserRouter as Router, Route, Routes, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Homepage from "./features/common/pages/homepage";
 import AdminNavbar from "./features/users/admins/components/AdminNavbar";
