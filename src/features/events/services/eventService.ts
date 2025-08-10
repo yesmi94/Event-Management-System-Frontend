@@ -60,6 +60,7 @@ export const deleteEvent = async (id: string) => {
 };
 
 export const createEvent = async (event: EventFormData) => {
+  console.log("Creating event:", event);
   const payload = {
     newEventDto: event,
   };

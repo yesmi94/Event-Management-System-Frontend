@@ -19,6 +19,7 @@ export default function CreateEventPage() {
   }, []);
 
   const handleAddEvent = async (data: EventFormData) => {
+    console.log("entered handling add event event:");
     try {
       const response = await createEvent(data);
       const eventId = response.data?.id;
@@ -93,7 +94,7 @@ export default function CreateEventPage() {
             </CardContent>
           </Card>
         </div>
-        
+
         <div
           className={`text-center mt-12 transition-all duration-1000 delay-600 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
