@@ -4,6 +4,9 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "https://web-app-event-management-backend.azurewebsites.net/api/",
+  headers: {
+    Accept: "application/json",
+  },
 });
 
 api.interceptors.request.use((config) => {
