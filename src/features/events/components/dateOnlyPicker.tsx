@@ -1,39 +1,39 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronDownIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
-import { Label } from "@/components/ui/label"
+import * as React from "react";
+import { ChevronDownIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import type { DateOnlyPickerProps } from "../types/types"
-import { useState, useEffect } from "react"
+} from "@/components/ui/popover";
+import type { DateOnlyPickerProps } from "../types/types";
+import { useState, useEffect } from "react";
 
 export const DateOnlyPicker: React.FC<DateOnlyPickerProps> = ({
   onDateChange,
   initialDate,
 }) => {
-  const [open, setOpen] = useState(false)
-  const [date, setDate] = useState<Date | undefined>(undefined)
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<Date | undefined>(undefined);
 
   // Pre-fill the date on mount if initialDate is provided
   useEffect(() => {
     if (initialDate) {
-      setDate(new Date(initialDate))
+      setDate(new Date(initialDate));
     }
-  }, [initialDate])
+  }, [initialDate]);
 
   const handleSelect = (selectedDate: Date | undefined) => {
-    setDate(selectedDate)
-    setOpen(false)
+    setDate(selectedDate);
+    setOpen(false);
     if (selectedDate) {
-      onDateChange?.(selectedDate)
+      onDateChange?.(selectedDate);
     }
-  }
+  };
 
   return (
     <div className="flex gap-4">
@@ -63,9 +63,5 @@ export const DateOnlyPicker: React.FC<DateOnlyPickerProps> = ({
         </Popover>
       </div>
     </div>
-  )
-}
-
-
-
-
+  );
+};
