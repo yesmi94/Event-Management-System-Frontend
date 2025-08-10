@@ -30,7 +30,7 @@ export default function AdminNavbar() {
             </a>
           </li>
           <li>
-            <a href="#" className="text-white hover:text-gray-400 transition-colors">
+            <a href="/registrations" className="text-white hover:text-gray-400 transition-colors">
               My Registrations
             </a>
           </li>
