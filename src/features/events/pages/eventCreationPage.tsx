@@ -33,9 +33,9 @@ export default function CreateEventPage() {
         formData.append("file", imageFile);
 
         await uploadEventImage(eventId, formData);
-        toast.success("Event created successfully");
       }
 
+      toast.success("Event created successfully");
       navigate(`/events/${eventId}`);
     } catch (error: unknown) {
       let errorMessage = "An unexpected error occurred.";
@@ -58,7 +58,6 @@ export default function CreateEventPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-black relative overflow-hidden pt-16">
-      {/* Animated background elements */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
         <div className="absolute top-40 right-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
@@ -66,7 +65,6 @@ export default function CreateEventPage() {
       </div>
 
       <div className="relative z-10 p-8 max-w-4xl mx-auto">
-        {/* Header */}
         <div
           className={`text-center mb-12 transition-all duration-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-8"
@@ -81,7 +79,6 @@ export default function CreateEventPage() {
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-6 rounded-full"></div>
         </div>
 
-        {/* Form Card */}
         <div
           className={`transition-all duration-1000 delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
@@ -96,8 +93,7 @@ export default function CreateEventPage() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Footer */}
+        
         <div
           className={`text-center mt-12 transition-all duration-1000 delay-600 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
