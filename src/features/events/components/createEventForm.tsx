@@ -1,6 +1,4 @@
 // src/components/events/AddEventForm.tsx
-
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { Input } from "@/components/ui/input";
@@ -20,6 +18,8 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { DateOnlyPicker } from "./dateOnlyPicker";
 import { getEventTypes } from "../services/eventService";
+import { useBoolean } from "@/shared/hooks/useBoolean";
+import { useForm } from "react-hook-form";
 import {
   Calendar,
   Clock,
@@ -32,7 +32,6 @@ import {
   CheckCircle,
   Upload,
 } from "lucide-react";
-import { useBoolean } from "@/shared/hooks/useBoolean";
 
 export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
   const [eventTypes, setEventTypes] = useState<EventTypeOption[]>([]);
@@ -40,17 +39,6 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const [, setError] = useState("");
-
-  useEffect(() => {
-    setTrue();
-    getEventTypes()
-      .then((value) => {
-        setEventTypes(value);
-      })
-      .catch((err: any) => {
-        setError(err);
-      });
-  }, []);
 
   const {
     register,
@@ -62,17 +50,31 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
     resolver: zodResolver(eventSchema),
     defaultValues: {
       title: "",
-      type: 0,
+      type: undefined,
       description: "",
       location: "",
       organization: "",
-      capacity: 0,
-      eventDate: new Date(),
+      capacity: undefined,
+      eventDate: undefined,
       eventTime: "",
       eventImageUrl: "",
-      cutoffDate: new Date(),
+      cutoffDate: undefined,
     },
   });
+
+  useEffect(() => {
+    register("type");
+    register("eventDate");
+    register("cutoffDate");
+    register("eventImageUrl");
+  }, [register]);
+
+  useEffect(() => {
+    setTrue();
+    getEventTypes()
+      .then((value) => setEventTypes(value))
+      .catch((err: any) => setError(`Failed to fetch event types: ${err}`));
+  }, []);
 
   const eventDate = watch("eventDate");
   const eventTime = watch("eventTime");
@@ -80,6 +82,9 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file);
+    if (file) {
+      setValue("eventImageUrl", file.name, { shouldValidate: true });
+    }
     onFileChange?.(file);
   };
 
@@ -97,21 +102,10 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFileChange(e.dataTransfer.files[0]);
     }
   };
-
-  useEffect(() => {
-    getEventTypes()
-      .then((value) => {
-        setEventTypes(value);
-      })
-      .catch((err: any) => {
-        setError(`Failed to fetch event types: ${err}`);
-      });
-  }, []);
 
   const FormSection: React.FC<{
     title: string;
@@ -193,14 +187,15 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                 <FormField label="Event Title" error={errors.title?.message}>
                   <Input
                     {...register("title")}
-                    className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400/50"
                     placeholder="Enter event title"
+                    className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400/50"
                   />
                 </FormField>
 
                 <FormField label="Event Type" error={errors.type?.message}>
                   <Select
-                    onValueChange={(value: any) =>
+                    value={watch("type")?.toString() ?? ""}
+                    onValueChange={(value) =>
                       setValue("type", Number(value), { shouldValidate: true })
                     }
                   >
@@ -228,12 +223,13 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
               >
                 <Textarea
                   {...register("description")}
-                  className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400/50 min-h-[120px]"
                   placeholder="Describe your event in detail"
+                  className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400/50 min-h-[120px]"
                 />
               </FormField>
             </FormSection>
 
+            {/* LOCATION */}
             <FormSection
               title="Location & Organization"
               icon={<MapPin className="w-6 h-6 text-purple-400" />}
@@ -245,8 +241,8 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     <Input
                       {...register("location")}
-                      className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400/50"
                       placeholder="Event venue or address"
+                      className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400/50"
                     />
                   </div>
                 </FormField>
@@ -259,8 +255,8 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                     <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     <Input
                       {...register("organization")}
-                      className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400/50"
                       placeholder="Organizing company or group"
+                      className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400/50"
                     />
                   </div>
                 </FormField>
@@ -284,11 +280,9 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                 >
                   <div className="bg-white/10 border border-white/20 rounded-lg p-4">
                     <DateOnlyPicker
-                      onDateChange={(date) => {
-                        if (date) {
-                          setValue("eventDate", date);
-                        }
-                      }}
+                      onDateChange={(date) =>
+                        setValue("eventDate", date, { shouldValidate: true })
+                      }
                     />
                   </div>
                 </FormField>
@@ -315,11 +309,10 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                       type="number"
                       min="1"
                       {...register("capacity", {
-                        setValueAs: (value) =>
-                          value === "" ? undefined : Number(value),
+                        setValueAs: (v) => (v === "" ? undefined : Number(v)),
                       })}
-                      className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400/50"
                       placeholder="Max attendees"
+                      className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400/50"
                     />
                   </div>
                 </FormField>
@@ -336,7 +329,9 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
               >
                 <div className="bg-white/10 border border-white/20 rounded-lg p-4 max-w-md">
                   <DateOnlyPicker
-                    onDateChange={(date) => setValue("cutoffDate", date)}
+                    onDateChange={(date) =>
+                      setValue("cutoffDate", date, { shouldValidate: true })
+                    }
                   />
                 </div>
               </FormField>
@@ -367,12 +362,10 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                     }
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-
                   <div className="flex flex-col items-center gap-4">
                     <div className="w-16 h-16 bg-purple-400/20 rounded-full flex items-center justify-center">
                       <Upload className="w-8 h-8 text-purple-400" />
                     </div>
-
                     {selectedFile ? (
                       <div>
                         <p className="text-green-400 font-medium">

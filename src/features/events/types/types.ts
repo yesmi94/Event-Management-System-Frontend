@@ -11,7 +11,7 @@ export interface EventFormData {
   organization: string;
   capacity: number;
   eventImageUrl?: string;
-  remainingSpots: number;
+  remainingSpots?: number;
 }
 
 export interface EventCardProps {

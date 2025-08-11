@@ -32,7 +32,7 @@ export const EventCard: React.FC<EventCardProps> = ({
   const today = new Date();
   const isRegistrationClosed = new Date(cutoffDate) < today;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
+
   const handleConfirmationClick = () => {
     setIsDialogOpen(true);
   };
@@ -101,29 +101,40 @@ export const EventCard: React.FC<EventCardProps> = ({
           </Button>
         )}
 
-        {(isUpdatePage || isDeletePage) && (
+        {isUpdatePage && (
           <Button
             className={`w-full ${
               isUpdatePage
                 ? "bg-yellow-600 hover:bg-yellow-500"
                 : "bg-red-600 hover:bg-red-500"
             } text-white transition`}
-            onClick={handleConfirmationClick}
+            onClick={() => onAction(id)}
           >
-            {isUpdatePage ? "Update the Event" : "Delete the Event"}
+            Update the Event
           </Button>
         )}
 
         {isDeletePage && (
-          <ConfirmationDialog
-            isOpen={isDialogOpen}
-            onClose={() => setIsDialogOpen(false)}
-            onConfirm={() => onAction(id)}
-            message="Your are about to delete this Event. Do you want to continue ?"
-            dialogTitle="Delete Event"
-          />
+          <div>
+            <Button
+              className={`w-full ${
+                isUpdatePage
+                  ? "bg-yellow-600 hover:bg-yellow-500"
+                  : "bg-red-600 hover:bg-red-500"
+              } text-white transition`}
+              onClick={handleConfirmationClick}
+            >
+              Delete the Event
+            </Button>
+            <ConfirmationDialog
+              isOpen={isDialogOpen}
+              onClose={() => setIsDialogOpen(false)}
+              onConfirm={() => onAction(id)}
+              message="Your are about to delete this Event. Do you want to continue ?"
+              dialogTitle="Delete Event"
+            />
+          </div>
         )}
-
       </CardFooter>
     </Card>
   );

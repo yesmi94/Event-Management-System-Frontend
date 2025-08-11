@@ -81,6 +81,7 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({
   const eventDate = watch("eventDate");
   const eventTime = watch("eventTime");
   const cutoffDate = watch("cutoffDate");
+  const watchedType = watch("type"); // Watch the type field
 
   const handleFileChange = (file: File | null) => {
     setSelectedFile(file);
@@ -194,7 +195,8 @@ export const UpdateEventForm: React.FC<UpdateFormProps> = ({
 
                 <FormField label="Event Type" error={errors.type?.message}>
                   <Select
-                    onValueChange={(value: any) =>
+                    value={watchedType ? watchedType.toString() : ""}
+                    onValueChange={(value: string) =>
                       setValue("type", Number(value), { shouldValidate: true })
                     }
                   >

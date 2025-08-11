@@ -69,6 +69,7 @@ export default function EventDetailsPage() {
   const eventTimeFormatted = event.eventTime;
   const today = new Date();
   const isRegistrationClosed = new Date(event.cutoffDate) < today;
+  const isCapacityOver = event.remainingSpots == 0;
 
   const attendeesLabel = event.capacity === 1 ? "Attendee" : "Attendees";
 
@@ -189,6 +190,22 @@ export default function EventDetailsPage() {
             </Button>
           </div>
         )}
+        {hasRole("Public User") && isCapacityOver && (
+          <div className="pt-6">
+            <div className="pt-6">
+              <Button
+                className="text-black bg-white hover:bg-primary/90 hover:text-white px-6 py-2"
+                disabled={true}
+              >
+                Register Now
+              </Button>
+              <div className="text-lg text-purple-400 font-medium text-center">
+                All the spots are taken. Thank you!
+              </div>
+            </div>
+          </div>
+        )}
+
         {hasRole("Public User") && isRegistrationClosed && (
           <div className="pt-6">
             <Button
