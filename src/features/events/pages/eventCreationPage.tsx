@@ -101,7 +101,8 @@ export default function CreateEventPage() {
           }`}
         >
           <p className="text-gray-500 text-sm">
-            Need help? Check our documentation or contact support for assistance.
+            Need help? Check our documentation or contact support for
+            assistance.
           </p>
         </div>
       </div>

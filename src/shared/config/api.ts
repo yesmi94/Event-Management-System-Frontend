@@ -6,7 +6,7 @@ const api = axios.create({
   baseURL: "https://web-app-event-management-backend.azurewebsites.net/api/",
   headers: {
     Accept: "application/json",
-    Authorization: `Bearer ${keycloak?.token}`
+    Authorization: `Bearer ${keycloak?.token}`,
   },
 });
 

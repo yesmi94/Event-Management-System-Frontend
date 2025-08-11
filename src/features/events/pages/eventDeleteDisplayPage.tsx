@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import EventSearch from "../components/eventSearch";
 
 export default function EventDeleteDisplayPage() {
-  const [events, setEvents] = useState<EventCardProps[]>([]);
+  const [events] = useState<EventCardProps[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<EventCardProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -110,7 +110,7 @@ export default function EventDeleteDisplayPage() {
     try {
       await deleteEvent(id);
       toast.success("Event deleted successfully");
-      setEvents((prev) => prev.filter((e) => e.id !== id));
+      setFilteredEvents((prev) => prev.filter((e) => e.id !== id));
     } catch (error) {
       toast.error("Failed to delete event");
     }
@@ -159,19 +159,18 @@ export default function EventDeleteDisplayPage() {
           </div>
           <div className="pt-8 px-6 pb-6 max-w-5xl mx-auto mb-12">
             <EventSearch
-            filters={filters}
-            setFilters={setFilters}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            onApplyFilters={applyFilters}
-            onClearFilters={clearFilters}
-            onRefresh={handleRefresh}
-            loading={loading}
-            eventTypes={eventTypes}
-            uniqueLocations={uniqueLocations}
-          />
+              filters={filters}
+              setFilters={setFilters}
+              searchTerm={searchTerm}
+              setSearchTerm={setSearchTerm}
+              onApplyFilters={applyFilters}
+              onClearFilters={clearFilters}
+              onRefresh={handleRefresh}
+              loading={loading}
+              eventTypes={eventTypes}
+              uniqueLocations={uniqueLocations}
+            />
           </div>
-          
         </div>
 
         {error && (

@@ -178,10 +178,16 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-            <FormSection title="Basic Information" icon={<FileText className="w-6 h-6 text-purple-400" />} delay={200}>
+            <FormSection
+              title="Basic Information"
+              icon={<FileText className="w-6 h-6 text-purple-400" />}
+              delay={200}
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField label="Event Title" error={errors.title?.message}>
-                  <Input {...register("title")} placeholder="Enter event title"
+                  <Input
+                    {...register("title")}
+                    placeholder="Enter event title"
                     className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400/50"
                   />
                 </FormField>
@@ -198,7 +204,11 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                     </SelectTrigger>
                     <SelectContent className="bg-gray-800 border-gray-700">
                       {eventTypes.map((type) => (
-                        <SelectItem key={type.value} value={type.value.toString()} className="text-white hover:bg-gray-700">
+                        <SelectItem
+                          key={type.value}
+                          value={type.value.toString()}
+                          className="text-white hover:bg-gray-700"
+                        >
                           {type.label}
                         </SelectItem>
                       ))}
@@ -207,29 +217,45 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                 </FormField>
               </div>
 
-              <FormField label="Description" error={errors.description?.message}>
-                <Textarea {...register("description")} placeholder="Describe your event in detail"
+              <FormField
+                label="Description"
+                error={errors.description?.message}
+              >
+                <Textarea
+                  {...register("description")}
+                  placeholder="Describe your event in detail"
                   className="bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400/50 min-h-[120px]"
                 />
               </FormField>
             </FormSection>
 
             {/* LOCATION */}
-            <FormSection title="Location & Organization" icon={<MapPin className="w-6 h-6 text-purple-400" />} delay={400}>
+            <FormSection
+              title="Location & Organization"
+              icon={<MapPin className="w-6 h-6 text-purple-400" />}
+              delay={400}
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField label="Location" error={errors.location?.message}>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input {...register("location")} placeholder="Event venue or address"
+                    <Input
+                      {...register("location")}
+                      placeholder="Event venue or address"
                       className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400/50"
                     />
                   </div>
                 </FormField>
 
-                <FormField label="Organization" error={errors.organization?.message}>
+                <FormField
+                  label="Organization"
+                  error={errors.organization?.message}
+                >
                   <div className="relative">
                     <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input {...register("organization")} placeholder="Organizing company or group"
+                    <Input
+                      {...register("organization")}
+                      placeholder="Organizing company or group"
                       className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400/50"
                     />
                   </div>
@@ -237,20 +263,40 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
               </div>
             </FormSection>
 
-            <FormSection title="Event Details" icon={<Calendar className="w-6 h-6 text-purple-400" />} delay={600}>
+            <FormSection
+              title="Event Details"
+              icon={<Calendar className="w-6 h-6 text-purple-400" />}
+              delay={600}
+            >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <FormField label="Event Date" error={errors.eventDate?.message}
-                  info={eventDate ? `Selected: ${format(eventDate, "PPP")}` : undefined}>
+                <FormField
+                  label="Event Date"
+                  error={errors.eventDate?.message}
+                  info={
+                    eventDate
+                      ? `Selected: ${format(eventDate, "PPP")}`
+                      : undefined
+                  }
+                >
                   <div className="bg-white/10 border border-white/20 rounded-lg p-4">
-                    <DateOnlyPicker onDateChange={(date) => setValue("eventDate", date, { shouldValidate: true })} />
+                    <DateOnlyPicker
+                      onDateChange={(date) =>
+                        setValue("eventDate", date, { shouldValidate: true })
+                      }
+                    />
                   </div>
                 </FormField>
 
-                <FormField label="Event Time" error={errors.eventTime?.message}
-                  info={eventTime ? `Selected: ${eventTime}` : undefined}>
+                <FormField
+                  label="Event Time"
+                  error={errors.eventTime?.message}
+                  info={eventTime ? `Selected: ${eventTime}` : undefined}
+                >
                   <div className="relative">
                     <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input type="time" {...register("eventTime")}
+                    <Input
+                      type="time"
+                      {...register("eventTime")}
                       className="pl-10 bg-white/10 border-white/20 text-white focus:border-purple-400 focus:ring-purple-400/50"
                     />
                   </div>
@@ -259,8 +305,12 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                 <FormField label="Capacity" error={errors.capacity?.message}>
                   <div className="relative">
                     <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                    <Input type="number" min="1"
-                      {...register("capacity", { setValueAs: (v) => v === "" ? undefined : Number(v) })}
+                    <Input
+                      type="number"
+                      min="1"
+                      {...register("capacity", {
+                        setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                      })}
                       placeholder="Max attendees"
                       className="pl-10 bg-white/10 border-white/20 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400/50"
                     />
@@ -268,15 +318,30 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                 </FormField>
               </div>
 
-              <FormField label="Registration Cutoff Date" error={errors.cutoffDate?.message}
-                info={cutoffDate ? `Selected: ${format(cutoffDate, "PPP")}` : undefined}>
+              <FormField
+                label="Registration Cutoff Date"
+                error={errors.cutoffDate?.message}
+                info={
+                  cutoffDate
+                    ? `Selected: ${format(cutoffDate, "PPP")}`
+                    : undefined
+                }
+              >
                 <div className="bg-white/10 border border-white/20 rounded-lg p-4 max-w-md">
-                  <DateOnlyPicker onDateChange={(date) => setValue("cutoffDate", date, { shouldValidate: true })} />
+                  <DateOnlyPicker
+                    onDateChange={(date) =>
+                      setValue("cutoffDate", date, { shouldValidate: true })
+                    }
+                  />
                 </div>
               </FormField>
             </FormSection>
 
-            <FormSection title="Event Image" icon={<Image className="w-6 h-6 text-purple-400" />} delay={800}>
+            <FormSection
+              title="Event Image"
+              icon={<Image className="w-6 h-6 text-purple-400" />}
+              delay={800}
+            >
               <FormField label="Upload Event Image">
                 <div
                   className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-300 ${
@@ -292,7 +357,9 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                   <input
                     type="file"
                     accept="image/*"
-                    onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+                    onChange={(e) =>
+                      handleFileChange(e.target.files?.[0] || null)
+                    }
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
                   <div className="flex flex-col items-center gap-4">
@@ -301,13 +368,21 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
                     </div>
                     {selectedFile ? (
                       <div>
-                        <p className="text-green-400 font-medium">{selectedFile.name}</p>
-                        <p className="text-gray-400 text-sm">Click or drag to replace</p>
+                        <p className="text-green-400 font-medium">
+                          {selectedFile.name}
+                        </p>
+                        <p className="text-gray-400 text-sm">
+                          Click or drag to replace
+                        </p>
                       </div>
                     ) : (
                       <div>
-                        <p className="text-white font-medium mb-2">Drop your image here or click to browse</p>
-                        <p className="text-gray-400 text-sm">Supports JPG, PNG</p>
+                        <p className="text-white font-medium mb-2">
+                          Drop your image here or click to browse
+                        </p>
+                        <p className="text-gray-400 text-sm">
+                          Supports JPG, PNG
+                        </p>
                       </div>
                     )}
                   </div>
@@ -317,10 +392,14 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
 
             <div
               className={`text-center pt-8 transition-all duration-1000 delay-1000 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
               }`}
             >
-              <Button type="submit" disabled={isSubmitting}
+              <Button
+                type="submit"
+                disabled={isSubmitting}
                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-12 py-4 text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {isSubmitting ? (
@@ -342,4 +421,3 @@ export const AddEventForm: React.FC<Props> = ({ onSubmit, onFileChange }) => {
     </div>
   );
 };
-

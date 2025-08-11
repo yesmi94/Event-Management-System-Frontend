@@ -25,11 +25,7 @@ export const eventSchema = z
     eventTime: z.string().min(1, "Event time is required"),
     imageUrl: z.string().optional(),
   })
-  .refine(
-    (data) => data.cutoffDate <= data.eventDate,
-    {
-      message: "Cutoff date cannot be after the event date",
-      path: ["cutoffDate"],
-    }
-  );
-
+  .refine((data) => data.cutoffDate <= data.eventDate, {
+    message: "Cutoff date cannot be after the event date",
+    path: ["cutoffDate"],
+  });

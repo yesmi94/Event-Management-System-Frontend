@@ -20,22 +20,34 @@ export default function AdminNavbar() {
 
         <ul className="hidden md:flex lg:pl-30 space-x-9 lg:space-x-10 items-center">
           <li>
-            <a href="/" className="text-white hover:text-gray-400 transition-colors">
+            <a
+              href="/"
+              className="text-white hover:text-gray-400 transition-colors"
+            >
               Home
             </a>
           </li>
           <li>
-            <a href="/events" className="text-white hover:text-gray-400 transition-colors">
+            <a
+              href="/events"
+              className="text-white hover:text-gray-400 transition-colors"
+            >
               Events
             </a>
           </li>
           <li>
-            <a href="/registrations" className="text-white hover:text-gray-400 transition-colors">
+            <a
+              href="/registrations"
+              className="text-white hover:text-gray-400 transition-colors"
+            >
               My Registrations
             </a>
           </li>
           <li>
-            <a href="/profile" className="text-white hover:text-gray-400 transition-colors">
+            <a
+              href="/profile"
+              className="text-white hover:text-gray-400 transition-colors"
+            >
               Profile
             </a>
           </li>
@@ -51,7 +63,11 @@ export default function AdminNavbar() {
         </div>
 
         <div className="md:hidden flex items-center space-x-2">
-          <Button variant="ghost" size="sm" className="text-purple-300 hover:text-gray-400">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-purple-300 hover:text-gray-400"
+          >
             <User className="w-5 h-5" />
           </Button>
           <Button
@@ -60,7 +76,11 @@ export default function AdminNavbar() {
             onClick={toggleMenu}
             className="text-purple-300 hover:text-gray-400"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </Button>
         </div>
       </div>
@@ -69,8 +89,8 @@ export default function AdminNavbar() {
         <div className="md:hidden mt-4 pb-4">
           <ul className="flex flex-col space-y-3">
             <li>
-              <a 
-                href="/" 
+              <a
+                href="/"
                 className="block text-white hover:text-gray-400 transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -78,8 +98,8 @@ export default function AdminNavbar() {
               </a>
             </li>
             <li>
-              <a 
-                href="/events" 
+              <a
+                href="/events"
                 className="block text-white hover:text-gray-400 transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -87,8 +107,8 @@ export default function AdminNavbar() {
               </a>
             </li>
             <li>
-              <a 
-                href="/registrations" 
+              <a
+                href="/registrations"
                 className="block text-white hover:text-gray-400 transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -96,8 +116,8 @@ export default function AdminNavbar() {
               </a>
             </li>
             <li>
-              <a 
-                href="/profile" 
+              <a
+                href="/profile"
                 className="block text-white hover:text-gray-400 transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
